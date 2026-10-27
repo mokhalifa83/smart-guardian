@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: smart_guardian_timescaledb
+    environment:
+      POSTGRES_DB: smart_guardian
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d smart_guardian"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smart_guardian_backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgrespassword@timescaledb:5432/smart_guardian
+      SYNC_DATABASE_URL: postgresql://postgres:postgrespassword@timescaledb:5432/smart_guardian
+      LOG_LEVEL: INFO
+      ALLOW_FIELD_CONTROL_COMMANDS: "false"
+    ports:
+      - "8000:8000"
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: smart_guardian_frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api/v1
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  timescale_data:

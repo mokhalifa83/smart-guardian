@@ -1,0 +1,48 @@
+services:
+  # ------------------------------------------------------------
+  # 1. Backend Web Service (FastAPI)
+  # ------------------------------------------------------------
+  - type: web
+    name: smart-guardian-backend
+    env: python
+    region: frankfurt
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: smart-guardian-db
+          property: connectionString
+      - key: CORS_ORIGINS
+        value: "*"
+
+  # ------------------------------------------------------------
+  # 2. Frontend Web Service (Next.js)
+  # ------------------------------------------------------------
+  - type: web
+    name: smart-guardian-frontend
+    env: node
+    region: frankfurt
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Note: Set NEXT_PUBLIC_API_URL to: https://<your-backend-name>.onrender.com/api/v1
+
+databases:
+  # ------------------------------------------------------------
+  # 3. Managed PostgreSQL Database
+  # ------------------------------------------------------------
+  - name: smart-guardian-db
+    plan: free
+    region: frankfurt
+    databaseName: smart_guardian
+    user: sg_admin

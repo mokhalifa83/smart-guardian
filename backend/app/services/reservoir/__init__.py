@@ -1,5 +1,6 @@
 from app.services.reservoir.contracts import EngineeringResult, EngineeringStatus
 from app.services.reservoir.physics_guardrails import PhysicsGuardrails, PhysicsConstraintViolation
+from app.services.reservoir.engine_catalog import ENGINE_CATALOG_36, get_36_engines_catalog
 from app.services.reservoir.pvt_engine import PVTEngine
 from app.services.reservoir.virtual_separator_pvt import (
     VirtualSeparatorPVTFoundation,
@@ -91,4 +92,6 @@ __all__ = [
     "Step2CIntegrationRegistry",
     "PhysicsGuardrails",
     "PhysicsConstraintViolation",
+    "ENGINE_CATALOG_36",
+    "get_36_engines_catalog",
 ]

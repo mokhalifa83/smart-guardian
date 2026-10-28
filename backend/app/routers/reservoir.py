@@ -35,6 +35,7 @@ from app.services.edge_connector import EdgeConnector
 from app.services.reconciliation_service import VirtualSeparatorReconciliationService
 from app.services.daily_report_service import DailyReportService, DailyReservoirReport
 from app.services.reservoir.integration_contracts import Step2CIntegrationRegistry, Step2CConnectorReadiness
+from app.services.reservoir.engine_catalog import get_36_engines_catalog, ENGINE_CATALOG_36
 
 from app.schemas.reservoir import (
     PVTCalculationRequest,
@@ -69,6 +70,20 @@ from app.schemas.reservoir import (
 )
 
 router = APIRouter(prefix="/reservoir", tags=["Reservoir Intelligence Layer"])
+
+
+@router.get("/engines/catalog")
+async def get_all_36_engines():
+    """
+    Returns the comprehensive catalog of all 36 Petroleum Engineering, Surveillance,
+    Artificial Lift, Economics, and Physics-Informed AI Engines.
+    Each engine is mapped to its official SPE peer-reviewed reference.
+    """
+    return {
+        "total_engines": len(ENGINE_CATALOG_36),
+        "standards": "SPE Peer-Reviewed Literature & SPE-PRMS",
+        "engines": get_36_engines_catalog()
+    }
 
 
 # ============================================================

@@ -27,6 +27,7 @@ from typing import Dict, Any, Optional
 from datetime import datetime, timezone
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.config import settings
 from app.core.logging import logger
 from app.models.alert import Alert
 from app.models.analysis import AnalysisResult
@@ -129,36 +130,63 @@ class NotificationDispatcher:
             )
 
         # -------------------------------------------------------------
-        # Channel 2: WhatsApp Notification (Prompt 5) - COMPLETELY INDEPENDENT
+        # Channel 2: WhatsApp Notification (Prompt 5) - Supports Multiple Recipients
         # -------------------------------------------------------------
-        try:
-            whatsapp_result = await WhatsAppNotificationService.send_early_warning_whatsapp(context)
-            results["WHATSAPP"] = whatsapp_result
-        except Exception as exc:
-            logger.error(f"WhatsApp dispatch unhandled exception: {exc}")
-            results["WHATSAPP"] = NotificationDeliveryResult(
-                channel="WHATSAPP",
-                status="FAILED",
-                recipient="whatsapp-recipients",
-                error_message=str(exc)
-            )
+        whatsapp_recipients = settings.WHATSAPP_RECIPIENTS or ["+10000000000"]
+        whatsapp_delivery_results = []
+        for rec in whatsapp_recipients:
+            try:
+                wa_res = await WhatsAppNotificationService.send_early_warning_whatsapp(context, recipient_override=rec)
+                whatsapp_delivery_results.append(wa_res)
+            except Exception as exc:
+                logger.error(f"WhatsApp dispatch unhandled exception for {rec}: {exc}")
+                whatsapp_delivery_results.append(
+                    NotificationDeliveryResult(
+                        channel="WHATSAPP",
+                        status="FAILED",
+                        recipient=rec,
+                        error_message=str(exc)
+                    )
+                )
+
+        if whatsapp_delivery_results:
+            results["WHATSAPP"] = whatsapp_delivery_results[0]
 
         # -------------------------------------------------------------
         # Persistent Notification Audit Records
         # -------------------------------------------------------------
         try:
-            for channel_name, res in results.items():
-                record = NotificationRecord(
-                    alert_id=alert.alert_id,
-                    well_code=alert.well_code,
-                    channel=channel_name,
-                    recipient=res.recipient,
-                    status=res.status,
-                    provider_message_id=res.provider_message_id,
-                    error_message=res.error_message,
-                    sent_at=res.timestamp if res.status in {"SENT", "LOGGED_ONLY"} else None
+            # Audit email result
+            if "EMAIL" in results:
+                email_res = results["EMAIL"]
+                db.add(
+                    NotificationRecord(
+                        alert_id=alert.alert_id,
+                        well_code=alert.well_code,
+                        channel="EMAIL",
+                        recipient=email_res.recipient,
+                        status=email_res.status,
+                        provider_message_id=email_res.provider_message_id,
+                        error_message=email_res.error_message,
+                        sent_at=email_res.timestamp if email_res.status in {"SENT", "LOGGED_ONLY"} else None
+                    )
                 )
-                db.add(record)
+
+            # Audit all WhatsApp recipient results
+            for wa_res in whatsapp_delivery_results:
+                db.add(
+                    NotificationRecord(
+                        alert_id=alert.alert_id,
+                        well_code=alert.well_code,
+                        channel="WHATSAPP",
+                        recipient=wa_res.recipient,
+                        status=wa_res.status,
+                        provider_message_id=wa_res.provider_message_id,
+                        error_message=wa_res.error_message,
+                        sent_at=wa_res.timestamp if wa_res.status in {"SENT", "LOGGED_ONLY"} else None
+                    )
+                )
+
             await db.commit()
         except Exception as audit_exc:
             logger.error(f"Failed to record notification audit: {audit_exc}")

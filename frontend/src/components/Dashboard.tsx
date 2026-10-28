@@ -63,44 +63,44 @@ export function Dashboard() {
         onOpenSupervisoryModal={() => setIsSupervisoryModalOpen(true)}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6 space-y-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-8 space-y-8">
         {/* Well Surveillance Summary Banner */}
-        <div className="rounded-2xl border border-cyan-500/20 bg-[#0c1527] p-6 shadow-2xl shadow-cyan-950/20 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="rounded-3xl border border-red-600/30 bg-gradient-to-r from-[#120707] via-[#0d0d10] to-[#120707] p-8 shadow-2xl shadow-black/80 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="flex items-center gap-3">
-              <h2 className="text-2xl font-black tracking-tight text-white font-mono">
+            <div className="flex items-center gap-3.5 flex-wrap">
+              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white font-mono">
                 {dashboard?.well_code || selectedWellCode}
               </h2>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cyan-950 text-cyan-300 border border-cyan-800">
+              <span className="px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold bg-zinc-900 text-zinc-200 border border-zinc-700">
                 {selectedWell?.field_name || dashboard?.field_name || "Field Reservoir"}
               </span>
               <span
-                className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                className={`px-3.5 py-1 rounded-full text-xs sm:text-sm font-black ${
                   (selectedWell?.status || dashboard?.well_status) === "ACTIVE"
-                    ? "bg-emerald-950 text-emerald-400 border border-emerald-800 animate-pulse"
-                    : "bg-amber-950 text-amber-400 border border-amber-800"
+                    ? "bg-red-950 text-red-300 border border-red-600 animate-pulse shadow-sm shadow-red-600/30"
+                    : "bg-zinc-800 text-zinc-300 border border-zinc-700"
                 }`}
               >
                 {selectedWell?.status || dashboard?.well_status || "ACTIVE"}
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-1.5 font-medium">
+            <p className="text-sm text-zinc-400 mt-2 font-medium">
               {t("dashboard.subtitle")}
             </p>
           </div>
 
           {/* Quick Metrics & Actions */}
-          <div className="flex flex-wrap items-center gap-3 text-xs">
-            <div className="bg-[#080e1b] border border-oilfield-700/80 px-3.5 py-2 rounded-xl">
-              <span className="text-slate-400 block text-[11px] font-semibold">{t("dashboard.configured_threshold")}:</span>
-              <span className="text-sm font-bold font-mono text-amber-400">
+          <div className="flex flex-wrap items-center gap-3.5 text-xs sm:text-sm">
+            <div className="bg-zinc-900 border border-zinc-700 px-5 py-3 rounded-2xl shadow-sm">
+              <span className="text-zinc-400 block text-xs font-bold uppercase tracking-wider">{t("dashboard.configured_threshold")}:</span>
+              <span className="text-lg font-black font-mono text-red-400 mt-0.5 block">
                 {dashboard ? `${dashboard.configured_wc_threshold}%` : "80.0%"}
               </span>
             </div>
 
-            <div className="bg-[#080e1b] border border-oilfield-700/80 px-3.5 py-2 rounded-xl">
-              <span className="text-slate-400 block text-[11px] font-semibold">{t("dashboard.latest_ts")}:</span>
-              <span className="text-xs font-bold font-mono text-cyan-300">
+            <div className="bg-zinc-900 border border-zinc-700 px-5 py-3 rounded-2xl shadow-sm">
+              <span className="text-zinc-400 block text-xs font-bold uppercase tracking-wider">{t("dashboard.latest_ts")}:</span>
+              <span className="text-sm font-black font-mono text-zinc-200 mt-0.5 block">
                 {formatDateTime(dashboard?.latest_timestamp)}
               </span>
             </div>
@@ -108,48 +108,48 @@ export function Dashboard() {
             <button
               onClick={() => refetch()}
               disabled={isFetching}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-oilfield-700 hover:bg-oilfield-600 text-white border border-oilfield-600 transition shadow-sm"
+              className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-700 hover:border-red-500 transition shadow-sm font-bold"
               title="Poll API immediately"
             >
-              <RefreshCw className={`w-3.5 h-3.5 text-cyan-400 ${isFetching ? "animate-spin" : ""}`} />
-              <span className="font-semibold">{t("dashboard.refresh_now")}</span>
+              <RefreshCw className={`w-4 h-4 text-red-400 ${isFetching ? "animate-spin" : ""}`} />
+              <span>{t("dashboard.refresh_now")}</span>
             </button>
           </div>
         </div>
 
         {/* View Mode Switcher: Real-Time Surveillance vs 36 Reservoir Engines */}
-        <div className="flex flex-wrap items-center justify-between gap-3 bg-[#0a1120] border border-slate-800 p-2 rounded-2xl">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-4 bg-[#0e0e11] border border-zinc-800 p-2.5 rounded-2xl shadow-xl">
+          <div className="flex items-center gap-3">
             <button
               onClick={() => setDashboardView("surveillance")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
+              className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-black transition ${
                 dashboardView === "surveillance"
-                  ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-600/30"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-[#0f172a]"
+                  ? "bg-red-600 text-white shadow-lg shadow-red-600/40 border border-red-400/30"
+                  : "text-zinc-400 hover:text-white hover:bg-zinc-900"
               }`}
             >
-              <Activity className="w-4 h-4" />
+              <Activity className="w-5 h-5" />
               <span>المراقبة الحقلية المباشرة والإنذار المبكر (Field Surveillance & Alerts)</span>
             </button>
 
             <button
               onClick={() => setDashboardView("engines")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
+              className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-black transition ${
                 dashboardView === "engines"
-                  ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-600/30"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-[#0f172a]"
+                  ? "bg-gradient-to-r from-red-600 to-zinc-900 text-white shadow-lg shadow-red-600/40 border border-red-500/50"
+                  : "text-zinc-400 hover:text-white hover:bg-zinc-900"
               }`}
             >
-              <Cpu className="w-4 h-4" />
+              <Cpu className="w-5 h-5 text-red-400" />
               <span>محركات المكمن والذكاء الهندسي (36 Physics Engines Hub)</span>
-              <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-950 text-indigo-300 border border-indigo-700">
+              <span className="px-2 py-0.5 rounded-md text-xs font-mono font-black bg-red-950 text-red-300 border border-red-800">
                 36
               </span>
             </button>
           </div>
 
-          <div className="text-[11px] text-slate-400 font-mono hidden md:block px-3">
-            Active Well: <span className="text-cyan-300 font-bold">{selectedWellCode}</span>
+          <div className="text-xs text-zinc-400 font-mono hidden md:block px-4">
+            Active Well: <strong className="text-red-400 text-sm font-black">{selectedWellCode}</strong>
           </div>
         </div>
 
@@ -157,31 +157,31 @@ export function Dashboard() {
         {/* VIEW 1: FIELD SURVEILLANCE & REAL-TIME ALERTS VIEW       */}
         {/* ========================================================= */}
         {dashboardView === "surveillance" && (
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* Global Surveillance State Banner */}
             {dashboard && (
               <div
-                className={`rounded-xl border p-4 flex items-center justify-between transition-all ${
+                className={`rounded-2xl border p-5 flex items-center justify-between transition-all shadow-xl ${
                   dashboard.surveillance_state === "WARNING"
-                    ? "bg-amber-950/40 border-amber-500/40 text-amber-200"
+                    ? "bg-gradient-to-r from-red-950/60 via-[#180808] to-[#0e0e11] border-red-600 text-red-200"
                     : dashboard.surveillance_state === "NORMAL"
-                    ? "bg-emerald-950/40 border-emerald-500/40 text-emerald-200"
-                    : "bg-slate-900/80 border-slate-700 text-slate-300"
+                    ? "bg-zinc-900 border-zinc-700 text-zinc-200"
+                    : "bg-zinc-900 border-zinc-800 text-zinc-400"
                 }`}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                   {dashboard.surveillance_state === "WARNING" ? (
-                    <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
+                    <AlertTriangle className="w-7 h-7 text-red-500 shrink-0 animate-pulse" />
                   ) : dashboard.surveillance_state === "NORMAL" ? (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+                    <CheckCircle2 className="w-7 h-7 text-emerald-400 shrink-0" />
                   ) : (
-                    <HelpCircle className="w-5 h-5 text-slate-400 shrink-0" />
+                    <HelpCircle className="w-7 h-7 text-zinc-500 shrink-0" />
                   )}
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-wider">
+                    <span className="text-sm font-black uppercase tracking-wider block">
                       Surveillance Condition: {dashboard.surveillance_state}
                     </span>
-                    <p className="text-xs text-slate-300 mt-0.5">
+                    <p className="text-sm text-zinc-300 mt-1 font-medium">
                       {dashboard.surveillance_state === "WARNING"
                         ? "Production threshold exceedance detected on monitored asset. Operational review required."
                         : dashboard.surveillance_state === "NORMAL"
@@ -191,7 +191,7 @@ export function Dashboard() {
                   </div>
                 </div>
 
-                <span className="text-[11px] font-mono font-bold px-2.5 py-1 rounded-lg bg-black/40 border border-white/10">
+                <span className="text-xs font-mono font-black px-3.5 py-1.5 rounded-xl bg-black/60 border border-zinc-700">
                   {dashboard.surveillance_state}
                 </span>
               </div>
@@ -266,15 +266,15 @@ export function Dashboard() {
         )}
 
         {/* Architectural Footer Note */}
-        <div className="rounded-xl border border-oilfield-700/60 bg-[#080e1b] p-4 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <Server className="w-4 h-4 text-slate-500 shrink-0" />
+        <div className="rounded-2xl border border-zinc-800 bg-[#0e0e11] p-5 text-sm text-zinc-400 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+          <div className="flex items-center gap-3">
+            <Server className="w-5 h-5 text-red-500 shrink-0" />
             <div>
-              <span className="font-semibold text-slate-300">Data Integrity Principle: </span>
-              <span>{t("footer.provenance_notice")}</span>
+              <span className="font-bold text-white">Data Integrity Principle: </span>
+              <span className="text-zinc-300">{t("footer.provenance_notice")}</span>
             </div>
           </div>
-          <span className="text-[11px] text-cyan-400 font-mono font-semibold">
+          <span className="text-xs text-red-400 font-mono font-black tracking-wider bg-zinc-900 border border-zinc-800 px-3 py-1 rounded-lg">
             SMART GUARDIAN ENGINE v2.0
           </span>
         </div>

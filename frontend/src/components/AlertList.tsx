@@ -35,77 +35,77 @@ export function AlertList({ alerts, wellCode }: AlertListProps) {
 
   if (!alerts || alerts.length === 0) {
     return (
-      <div className="rounded-xl border border-oilfield-700 bg-oilfield-800/40 p-6 text-center">
-        <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto mb-2 opacity-80" />
-        <p className="text-sm text-slate-300 font-medium">{t("alerts.empty")}</p>
-        <p className="text-xs text-slate-400 mt-1">{t("alerts.root_cause_disclaimer")}</p>
+      <div className="rounded-2xl border border-zinc-800 bg-[#0e0e11] p-8 text-center shadow-lg">
+        <CheckCircle2 className="w-10 h-10 text-emerald-500 mx-auto mb-3 opacity-90" />
+        <p className="text-base text-zinc-200 font-bold">{t("alerts.empty")}</p>
+        <p className="text-sm text-zinc-400 mt-1">{t("alerts.root_cause_disclaimer")}</p>
       </div>
     );
   }
 
   return (
-    <div className="rounded-xl border border-amber-600/40 bg-oilfield-800/90 shadow-xl overflow-hidden">
+    <div className="rounded-2xl border border-red-600/50 bg-[#0e0e11] shadow-2xl overflow-hidden">
       {/* Alert Header */}
-      <div className="bg-amber-950/40 border-b border-amber-500/30 px-5 py-3.5 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <AlertTriangle className="w-5 h-5 text-amber-400" />
-          <h2 className="text-sm font-bold text-amber-200 uppercase tracking-wider">
+      <div className="bg-gradient-to-r from-red-950 via-[#180a0a] to-[#0e0e11] border-b border-red-600/40 px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <AlertTriangle className="w-6 h-6 text-red-500 animate-pulse" />
+          <h2 className="text-base font-black text-white uppercase tracking-wider">
             {t("alerts.title")} ({alerts.length})
           </h2>
         </div>
-        <div className="text-[11px] text-amber-300/80 font-mono">
+        <div className="text-xs text-red-300/80 font-mono">
           {t("alerts.root_cause_disclaimer")}
         </div>
       </div>
 
       {/* Alert Rows */}
-      <div className="divide-y divide-oilfield-700/60">
+      <div className="divide-y divide-zinc-800/80">
         {alerts.map((alert) => (
           <div
             key={alert.alert_id}
-            className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-oilfield-700/30 transition"
+            className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-5 hover:bg-zinc-900/60 transition"
           >
-            <div className="flex items-start gap-3">
-              <div className="mt-0.5 p-1.5 rounded-lg bg-amber-950/80 border border-amber-500/40">
-                <AlertCircle className="w-4 h-4 text-amber-400" />
+            <div className="flex items-start gap-4">
+              <div className="mt-1 p-2 rounded-xl bg-red-950 border border-red-600/60 shadow-sm">
+                <AlertCircle className="w-5 h-5 text-red-400" />
               </div>
               <div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <span className="text-xs font-mono font-black px-2.5 py-1 rounded-md bg-red-950 text-red-300 border border-red-800">
                     {alert.alert_type}
                   </span>
-                  <span className="text-xs font-semibold text-slate-400">
+                  <span className="text-xs font-bold text-zinc-300">
                     {alert.severity}
                   </span>
-                  <span className="text-xs text-slate-400 font-mono">
+                  <span className="text-xs text-zinc-400 font-mono">
                     {formatDateTime(alert.timestamp)}
                   </span>
                   <span
-                    className={`text-[10px] font-semibold px-2 py-0.5 rounded uppercase ${
+                    className={`text-xs font-bold px-2.5 py-0.5 rounded-md uppercase ${
                       alert.status === "ACTIVE"
-                        ? "bg-red-950/80 text-red-300 border border-red-800"
-                        : "bg-blue-950/80 text-blue-300 border border-blue-800"
+                        ? "bg-red-600 text-white shadow-sm shadow-red-600/40"
+                        : "bg-zinc-800 text-zinc-300 border border-zinc-700"
                     }`}
                   >
                     {t(`status.${alert.status}`) || alert.status}
                   </span>
                 </div>
-                <p className="text-sm text-slate-200 font-medium mt-1">
+                <p className="text-base text-white font-bold mt-2">
                   {alert.message}
                 </p>
-                <p className="text-[11px] text-slate-400 font-mono mt-0.5">
+                <p className="text-xs text-zinc-400 font-mono mt-1">
                   ID: {alert.alert_id} | Source: {alert.source}
                 </p>
               </div>
             </div>
 
             {/* Lifecycle Buttons */}
-            <div className="flex items-center gap-2 self-end md:self-center shrink-0">
+            <div className="flex items-center gap-3 self-end md:self-center shrink-0">
               {alert.status === "ACTIVE" && (
                 <button
                   onClick={() => ackMutation.mutate(alert.alert_id)}
                   disabled={ackMutation.isPending}
-                  className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-oilfield-700 hover:bg-oilfield-600 text-slate-200 border border-oilfield-500 transition"
+                  className="px-4 py-2 text-xs font-bold rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border border-zinc-600 transition shadow-sm"
                 >
                   {t("alerts.acknowledge")}
                 </button>
@@ -114,7 +114,7 @@ export function AlertList({ alerts, wellCode }: AlertListProps) {
                 <button
                   onClick={() => resolveMutation.mutate(alert.alert_id)}
                   disabled={resolveMutation.isPending}
-                  className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-600 transition"
+                  className="px-4 py-2 text-xs font-bold rounded-xl bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-600 transition shadow-sm"
                 >
                   {t("alerts.resolve")}
                 </button>

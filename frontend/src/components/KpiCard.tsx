@@ -30,13 +30,13 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
   const getMetricIcon = (metricKey: string) => {
     switch (metricKey) {
       case "water_cut":
-        return <Droplets className="w-5 h-5 text-cyan-400" />;
+        return <Droplets className="w-7 h-7 text-red-500" />;
       case "pressure":
-        return <Gauge className="w-5 h-5 text-amber-400" />;
+        return <Gauge className="w-7 h-7 text-zinc-300" />;
       case "flow_rate":
-        return <Activity className="w-5 h-5 text-emerald-400" />;
+        return <Activity className="w-7 h-7 text-red-400" />;
       default:
-        return <Activity className="w-5 h-5 text-slate-400" />;
+        return <Activity className="w-7 h-7 text-zinc-400" />;
     }
   };
 
@@ -44,23 +44,23 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
     switch (kpi.status) {
       case "NORMAL":
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-700/60">
-            <CheckCircle2 className="w-3.5 h-3.5" />
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-zinc-800 text-zinc-200 border border-zinc-700">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
             {t("status.NORMAL")}
           </span>
         );
       case "WARNING":
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-semibold bg-amber-950/90 text-amber-300 border border-amber-500">
-            <AlertTriangle className="w-3.5 h-3.5" />
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-black bg-red-950 text-red-300 border border-red-600 shadow-sm shadow-red-600/30 animate-pulse">
+            <AlertTriangle className="w-4 h-4 text-red-400" />
             {t("status.WARNING")}
           </span>
         );
       case "DATA_UNAVAILABLE":
       default:
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-600">
-            <HelpCircle className="w-3.5 h-3.5" />
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-zinc-900 text-zinc-400 border border-zinc-800">
+            <HelpCircle className="w-4 h-4" />
             {t("status.DATA_UNAVAILABLE")}
           </span>
         );
@@ -70,27 +70,27 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
   // Determine card border accent based on state
   const borderClass =
     kpi.status === "WARNING"
-      ? "border-amber-500/80 bg-amber-950/10"
+      ? "border-red-600 bg-gradient-to-b from-red-950/30 to-[#0e0e11] shadow-lg shadow-red-950/40"
       : kpi.status === "NORMAL"
-      ? "border-oilfield-700 hover:border-oilfield-600"
-      : "border-slate-700/60 bg-slate-900/40";
+      ? "border-zinc-800 hover:border-zinc-600 bg-[#0e0e11]"
+      : "border-zinc-900 bg-[#0a0a0d]";
 
   return (
     <div
-      className={`rounded-xl border ${borderClass} bg-oilfield-800/80 p-5 shadow-lg flex flex-col justify-between transition duration-200`}
+      className={`rounded-2xl border ${borderClass} p-6 shadow-xl flex flex-col justify-between transition-all duration-200 hover:-translate-y-1`}
     >
       {/* Top Header */}
       <div>
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-oilfield-700/60 border border-oilfield-600">
+        <div className="flex items-center justify-between gap-3 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-700 shadow-inner">
               {getMetricIcon(kpi.metric_key)}
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-slate-200 tracking-wide">
+              <h3 className="text-base font-bold text-white tracking-wide">
                 {t(`kpi.${kpi.metric_key}`) || kpi.title}
               </h3>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-xs text-zinc-400 font-medium mt-0.5">
                 {kpi.threshold !== null
                   ? `${t("kpi.threshold")}: ${kpi.threshold}%`
                   : `${t("kpi.value_type")}: ${t(`status.${kpi.value_type}`)}`}
@@ -101,30 +101,30 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
         </div>
 
         {/* Primary Measurement Display */}
-        <div className="my-4">
+        <div className="my-5">
           {kpi.status === "DATA_UNAVAILABLE" ? (
             <div className="py-2">
-              <span className="text-lg font-mono font-bold tracking-wider text-slate-400 uppercase bg-slate-800/80 px-3 py-1.5 rounded border border-slate-700">
+              <span className="text-base font-mono font-bold tracking-wider text-zinc-400 uppercase bg-zinc-900 px-4 py-2 rounded-lg border border-zinc-700 block text-center">
                 DATA_UNAVAILABLE
               </span>
-              <p className="text-xs text-slate-400 mt-2">
+              <p className="text-xs text-zinc-400 mt-2 text-center">
                 External telemetry unavailable. No synthetic 0.0 substitution.
               </p>
             </div>
           ) : (
-            <div className="flex items-baseline gap-2">
+            <div className="flex items-baseline gap-3">
               <span
-                className={`text-3xl lg:text-4xl font-extrabold font-mono tracking-tight ${
-                  kpi.status === "WARNING" ? "text-amber-400" : "text-white"
+                className={`text-4xl sm:text-5xl font-black font-mono tracking-tight ${
+                  kpi.status === "WARNING" ? "text-red-500 drop-shadow-[0_2px_10px_rgba(239,68,68,0.3)]" : "text-white"
                 }`}
               >
                 {kpi.display_value}
               </span>
-              <span className="text-sm font-semibold text-slate-400 font-mono">
+              <span className="text-lg font-bold text-zinc-400 font-mono">
                 {kpi.unit}
               </span>
               {kpi.is_threshold_exceeded && (
-                <span className="text-xs font-medium text-amber-400 border border-amber-500/50 bg-amber-950/60 px-2 py-0.5 rounded">
+                <span className="text-xs font-black text-red-300 border border-red-600 bg-red-950 px-2.5 py-1 rounded-md shadow-sm">
                   {t("kpi.warning_exceeded")}
                 </span>
               )}
@@ -134,42 +134,36 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
       </div>
 
       {/* Provenance & Audit Metadata Grid */}
-      <div className="border-t border-oilfield-700/60 pt-3 mt-2 grid grid-cols-2 gap-2 text-[11px] text-slate-400">
-        <div className="flex items-center gap-1.5 truncate">
-          <Database className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+      <div className="border-t border-zinc-800/80 pt-4 mt-2 grid grid-cols-2 gap-3 text-xs text-zinc-400 font-medium">
+        <div className="flex items-center gap-2 truncate">
+          <Database className="w-4 h-4 text-zinc-500 shrink-0" />
           <span className="truncate">
-            <span className="text-slate-400">{t("kpi.source")}: </span>
-            <span className="text-slate-300 font-medium font-mono">
-              {kpi.source || "--"}
-            </span>
+            {t("kpi.source")}: <strong className="text-zinc-200">{kpi.source}</strong>
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5 truncate">
-          <Tag className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+        <div className="flex items-center gap-2 truncate">
+          <Tag className="w-4 h-4 text-zinc-500 shrink-0" />
           <span className="truncate">
-            <span className="text-slate-400">{t("kpi.quality")}: </span>
-            <span
-              className={`font-medium ${
+            {t("kpi.quality")}:{" "}
+            <strong
+              className={
                 kpi.quality_status === "VALID"
                   ? "text-emerald-400"
                   : kpi.quality_status === "DATA_UNAVAILABLE"
-                  ? "text-slate-400 font-mono"
+                  ? "text-zinc-400 font-mono"
                   : "text-amber-400"
-              }`}
+              }
             >
               {t(`status.${kpi.quality_status}`) || kpi.quality_status}
-            </span>
+            </strong>
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5 col-span-2 truncate">
-          <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-          <span className="truncate text-slate-400">
-            {t("kpi.measured_at")}:{" "}
-            <span className="text-slate-300 font-mono">
-              {formatDateTime(kpi.timestamp)}
-            </span>
+        <div className="flex items-center gap-2 col-span-2 truncate">
+          <Clock className="w-4 h-4 text-zinc-500 shrink-0" />
+          <span className="truncate">
+            {t("kpi.measured_at")}: <span className="text-zinc-300 font-mono">{formatDateTime(kpi.timestamp)}</span>
           </span>
         </div>
       </div>

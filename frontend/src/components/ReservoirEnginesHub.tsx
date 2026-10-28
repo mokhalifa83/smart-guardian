@@ -91,7 +91,6 @@ export function ReservoirEnginesHub() {
     setChanLoading(true);
     setChanError(null);
     try {
-      // Realistic WOR history showing channeling/coning diagnostic trend for active well
       const history = [
         { time_days: 30, wor: 0.12, cum_oil_stb: 15000 },
         { time_days: 90, wor: 0.28, cum_oil_stb: 42000 },
@@ -207,57 +206,57 @@ export function ReservoirEnginesHub() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Top Banner: Petroleum Physics & SPE Standards Header */}
-      <div className="rounded-2xl border border-indigo-500/30 bg-gradient-to-r from-[#0d162d] via-[#0b1324] to-[#0d1c38] p-6 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="rounded-3xl border border-red-600/40 bg-gradient-to-r from-[#160606] via-[#0d0d10] to-[#160606] p-8 shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-indigo-600/30 border border-indigo-500/50 flex items-center justify-center text-indigo-400">
-                <Cpu className="w-5 h-5" />
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-red-950 border border-red-600/60 flex items-center justify-center text-red-500 shadow-lg shadow-red-600/20">
+                <Cpu className="w-7 h-7" />
               </div>
               <div>
-                <h3 className="text-xl font-black text-white flex items-center gap-2">
+                <h3 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-3">
                   <span>Reservoir Intelligence & 36 Physics Engines</span>
-                  <span className="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-indigo-950 text-indigo-300 border border-indigo-800">
+                  <span className="px-3 py-1 rounded-md text-xs font-mono font-black bg-red-950 text-red-300 border border-red-800">
                     SPE-PRMS Standard
                   </span>
                 </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
+                <p className="text-sm text-zinc-300 mt-1 font-medium">
                   جميع المحركات الهندسية والتشخيصية الـ 36 تعمل بالمعادلات المحكّمة من جمعية مهندسي البترول (SPE) وبقيود الفيزياء الصارمة.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5 text-xs">
-            <div className="bg-[#080e1b] border border-oilfield-700/80 px-4 py-2 rounded-xl flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+          <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm">
+            <div className="bg-zinc-900 border border-zinc-700 px-5 py-3 rounded-2xl flex items-center gap-3 shadow-sm">
+              <ShieldCheck className="w-5 h-5 text-red-500" />
               <div>
-                <span className="text-slate-400 block text-[10px] font-semibold">حالة المحركات:</span>
-                <span className="text-emerald-400 font-mono font-bold">36/36 Active & Verified</span>
+                <span className="text-zinc-400 block text-xs font-bold uppercase">حالة المحركات:</span>
+                <span className="text-white font-mono font-black text-sm">36/36 Active & Verified</span>
               </div>
             </div>
 
-            <div className="bg-[#080e1b] border border-oilfield-700/80 px-4 py-2 rounded-xl flex items-center gap-2">
-              <Activity className="w-4 h-4 text-cyan-400" />
+            <div className="bg-zinc-900 border border-zinc-700 px-5 py-3 rounded-2xl flex items-center gap-3 shadow-sm">
+              <Activity className="w-5 h-5 text-zinc-300" />
               <div>
-                <span className="text-slate-400 block text-[10px] font-semibold">البئر النشط للتحليل:</span>
-                <span className="text-cyan-300 font-mono font-bold">{selectedWellCode}</span>
+                <span className="text-zinc-400 block text-xs font-bold uppercase">البئر النشط للتحليل:</span>
+                <span className="text-red-400 font-mono font-black text-sm">{selectedWellCode}</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Tab Navigation Controls */}
-        <div className="flex flex-wrap items-center gap-2 mt-6 pt-5 border-t border-slate-800/80">
+        <div className="flex flex-wrap items-center gap-3 mt-8 pt-6 border-t border-zinc-800">
           <button
             onClick={() => setActiveTab("catalog")}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
+            className={`flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-black transition ${
               activeTab === "catalog"
-                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30"
-                : "bg-[#0f172a] text-slate-300 hover:bg-[#18233c] border border-slate-700/60"
+                ? "bg-red-600 text-white shadow-lg shadow-red-600/40 border border-red-400/40"
+                : "bg-zinc-900 text-zinc-300 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-500"
             }`}
           >
             <Layers className="w-4 h-4" />
@@ -269,13 +268,13 @@ export function ReservoirEnginesHub() {
               setActiveTab("chan");
               if (!chanResult) handleRunChan();
             }}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
+            className={`flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-black transition ${
               activeTab === "chan"
-                ? "bg-cyan-600 text-white shadow-lg shadow-cyan-600/30"
-                : "bg-[#0f172a] text-slate-300 hover:bg-[#18233c] border border-slate-700/60"
+                ? "bg-red-600 text-white shadow-lg shadow-red-600/40 border border-red-400/40"
+                : "bg-zinc-900 text-zinc-300 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-500"
             }`}
           >
-            <Activity className="w-4 h-4" />
+            <Activity className="w-4 h-4 text-red-400" />
             <span>منحنى تشان لتشخيص المياه (Chan Diagnostic)</span>
           </button>
 
@@ -284,13 +283,13 @@ export function ReservoirEnginesHub() {
               setActiveTab("vogel");
               if (!vogelResult) handleRunVogel();
             }}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
+            className={`flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-black transition ${
               activeTab === "vogel"
-                ? "bg-emerald-600 text-white shadow-lg shadow-emerald-600/30"
-                : "bg-[#0f172a] text-slate-300 hover:bg-[#18233c] border border-slate-700/60"
+                ? "bg-red-600 text-white shadow-lg shadow-red-600/40 border border-red-400/40"
+                : "bg-zinc-900 text-zinc-300 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-500"
             }`}
           >
-            <Gauge className="w-4 h-4" />
+            <Gauge className="w-4 h-4 text-red-400" />
             <span>منحنى أداء تدفق المكمن (Vogel IPR Curve)</span>
           </button>
 
@@ -299,13 +298,13 @@ export function ReservoirEnginesHub() {
               setActiveTab("vfm");
               if (!vfmResult) handleRunVfm();
             }}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
+            className={`flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-black transition ${
               activeTab === "vfm"
-                ? "bg-amber-600 text-white shadow-lg shadow-amber-600/30"
-                : "bg-[#0f172a] text-slate-300 hover:bg-[#18233c] border border-slate-700/60"
+                ? "bg-red-600 text-white shadow-lg shadow-red-600/40 border border-red-400/40"
+                : "bg-zinc-900 text-zinc-300 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-500"
             }`}
           >
-            <Activity className="w-4 h-4" />
+            <Activity className="w-4 h-4 text-red-400" />
             <span>القياس الافتراضي للخوانق (VFM Choke Engine)</span>
           </button>
 
@@ -314,13 +313,13 @@ export function ReservoirEnginesHub() {
               setActiveTab("mbe");
               if (!mbeResult) handleRunMbe();
             }}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
+            className={`flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-black transition ${
               activeTab === "mbe"
-                ? "bg-purple-600 text-white shadow-lg shadow-purple-600/30"
-                : "bg-[#0f172a] text-slate-300 hover:bg-[#18233c] border border-slate-700/60"
+                ? "bg-red-600 text-white shadow-lg shadow-red-600/40 border border-red-400/40"
+                : "bg-zinc-900 text-zinc-300 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-500"
             }`}
           >
-            <Scale className="w-4 h-4" />
+            <Scale className="w-4 h-4 text-zinc-300" />
             <span>ميزان المواد ودوافع المكمن (Havlena-Odeh MBE)</span>
           </button>
 
@@ -329,13 +328,13 @@ export function ReservoirEnginesHub() {
               setActiveTab("dca");
               if (!dcaResult) handleRunDca();
             }}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
+            className={`flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-black transition ${
               activeTab === "dca"
-                ? "bg-rose-600 text-white shadow-lg shadow-rose-600/30"
-                : "bg-[#0f172a] text-slate-300 hover:bg-[#18233c] border border-slate-700/60"
+                ? "bg-red-600 text-white shadow-lg shadow-red-600/40 border border-red-400/40"
+                : "bg-zinc-900 text-zinc-300 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-500"
             }`}
           >
-            <TrendingDown className="w-4 h-4" />
+            <TrendingDown className="w-4 h-4 text-red-400" />
             <span>انحدار الإنتاج والاحتياطي (Arps DCA Engine)</span>
           </button>
         </div>
@@ -345,31 +344,31 @@ export function ReservoirEnginesHub() {
       {/* TAB 1: 36 ENGINES MASTER CATALOG VIEW                          */}
       {/* ============================================================== */}
       {activeTab === "catalog" && (
-        <div className="space-y-5">
+        <div className="space-y-6">
           {/* Filters & Search */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-[#0a1120] border border-slate-800/80 p-4 rounded-xl">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-5 bg-[#0e0e11] border border-zinc-800 p-5 rounded-2xl shadow-lg">
             {/* Search Input */}
-            <div className="relative w-full md:w-80">
-              <Search className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
+            <div className="relative w-full md:w-96">
+              <Search className="w-5 h-5 absolute left-3.5 top-3.5 text-zinc-400" />
               <input
                 type="text"
                 placeholder="ابحث عن اسم المحرك أو مرجع SPE..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#060c18] border border-slate-700 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                className="w-full bg-zinc-900 border border-zinc-700 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-red-500 font-medium"
               />
             </div>
 
             {/* Category Pills */}
-            <div className="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
+            <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
               {categories.map((c) => (
                 <button
                   key={c.id}
                   onClick={() => setSelectedCategory(c.id)}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition ${
+                  className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition ${
                     selectedCategory === c.id
-                      ? "bg-indigo-600 text-white font-bold"
-                      : "bg-[#0f172a] text-slate-400 hover:text-slate-200 border border-slate-800"
+                      ? "bg-red-600 text-white shadow-md shadow-red-600/30"
+                      : "bg-zinc-900 text-zinc-300 hover:text-white border border-zinc-800 hover:border-zinc-700"
                   }`}
                 >
                   {c.label}
@@ -379,32 +378,32 @@ export function ReservoirEnginesHub() {
           </div>
 
           {/* Grid of 36 Engines Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {filteredEngines.map((eng: EngineItem) => (
               <div
                 key={eng.id}
-                className="bg-[#0b1322] border border-slate-800 hover:border-indigo-500/50 transition-all duration-200 rounded-2xl p-5 flex flex-col justify-between group shadow-md"
+                className="bg-[#0e0e11] border border-zinc-800 hover:border-red-500/70 transition-all duration-200 rounded-2xl p-6 flex flex-col justify-between group shadow-xl hover:-translate-y-1"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="w-7 h-7 rounded-lg bg-indigo-950/80 border border-indigo-800/80 text-indigo-400 font-mono text-xs font-black flex items-center justify-center">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="w-9 h-9 rounded-xl bg-red-950 border border-red-700 text-red-400 font-mono text-sm font-black flex items-center justify-center shadow-inner">
                       #{eng.id}
                     </span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-900 text-slate-300 border border-slate-700">
+                    <span className="px-3 py-1 rounded-md text-xs font-bold bg-zinc-900 text-zinc-300 border border-zinc-700">
                       {eng.category}
                     </span>
                   </div>
 
-                  <h4 className="text-sm font-bold text-white group-hover:text-indigo-300 transition">
+                  <h4 className="text-base font-black text-white group-hover:text-red-400 transition leading-snug">
                     {eng.name}
                   </h4>
 
-                  <div className="mt-3 bg-[#060c18] border border-slate-800/60 rounded-xl p-2.5">
-                    <div className="flex items-start gap-2">
-                      <BookOpen className="w-3.5 h-3.5 text-indigo-400 mt-0.5 shrink-0" />
+                  <div className="mt-4 bg-zinc-900/90 border border-zinc-800 rounded-xl p-3.5">
+                    <div className="flex items-start gap-2.5">
+                      <BookOpen className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
                       <div>
-                        <span className="text-[10px] font-semibold text-slate-400 block">مرجع معادلة SPE:</span>
-                        <p className="text-[11px] text-slate-200 font-mono mt-0.5 leading-snug">
+                        <span className="text-xs font-bold text-zinc-400 block uppercase">مرجع معادلة SPE:</span>
+                        <p className="text-xs text-zinc-200 font-mono mt-1 leading-relaxed">
                           {eng.spe_reference}
                         </p>
                       </div>
@@ -412,9 +411,9 @@ export function ReservoirEnginesHub() {
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-1.5 text-emerald-400 text-[11px] font-semibold">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
+                <div className="mt-5 pt-4 border-t border-zinc-800 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="flex items-center gap-2 text-emerald-400 font-bold">
+                    <CheckCircle2 className="w-4 h-4" />
                     <span>متاح ويعمل في المنصة</span>
                   </div>
 
@@ -427,10 +426,10 @@ export function ReservoirEnginesHub() {
                       else if (eng.name.includes("DCA")) setActiveTab("dca");
                       else setActiveTab("chan");
                     }}
-                    className="text-[11px] font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 transition"
+                    className="text-xs sm:text-sm font-black text-red-400 hover:text-red-300 flex items-center gap-1.5 transition"
                   >
                     <span>تشغيل للبئر</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
+                    <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -443,18 +442,18 @@ export function ReservoirEnginesHub() {
       {/* TAB 2: CHAN DIAGNOSTIC PLOT WORKFLOW                           */}
       {/* ============================================================== */}
       {activeTab === "chan" && (
-        <div className="bg-[#0b1322] border border-cyan-500/30 rounded-2xl p-6 shadow-xl space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+        <div className="bg-[#0e0e11] border border-red-600/40 rounded-3xl p-8 shadow-2xl space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-800">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-cyan-950 text-cyan-300 border border-cyan-800">
+              <div className="flex items-center gap-3">
+                <span className="px-3 py-1 rounded-md text-xs font-mono font-black bg-red-950 text-red-300 border border-red-800">
                   Engine #9
                 </span>
-                <h3 className="text-lg font-black text-white">
+                <h3 className="text-xl font-black text-white">
                   Chan Diagnostic Plot Engine (تشخيص مصدر تدفق المياه)
                 </h3>
               </div>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-sm text-zinc-300 mt-1">
                 المرجع المعتمد: K.S. Chan (1995) SPE 38880: Water Control Diagnostic Plots (Log-Log WOR & WOR' Derivative).
               </p>
             </div>
@@ -462,9 +461,9 @@ export function ReservoirEnginesHub() {
             <button
               onClick={handleRunChan}
               disabled={chanLoading}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl text-xs font-bold shadow-md transition disabled:opacity-50"
+              className="flex items-center gap-2.5 px-5 py-3 bg-red-600 hover:bg-red-500 text-white rounded-xl text-sm font-black shadow-lg shadow-red-600/30 transition disabled:opacity-50"
             >
-              {chanLoading ? <RotateCcw className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5" />}
+              {chanLoading ? <RotateCcw className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
               <span>إعادة حساب تشخيص تشان للبئر {selectedWellCode}</span>
             </button>
           </div>
@@ -472,65 +471,65 @@ export function ReservoirEnginesHub() {
           {chanResult && (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Diagnosis Summary Card */}
-              <div className="bg-[#080e1b] border border-cyan-500/40 rounded-xl p-5 flex flex-col justify-between">
+              <div className="bg-zinc-900 border border-red-600/50 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
                 <div>
-                  <span className="text-xs font-semibold text-slate-400 block mb-1">النتيجة التشخيصية المحسوبة:</span>
-                  <div className="text-2xl font-black font-mono text-cyan-300">
+                  <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-2">النتيجة التشخيصية المحسوبة:</span>
+                  <div className="text-2xl sm:text-3xl font-black font-mono text-red-400">
                     {chanResult.diagnosis || "WATER_CHANNELING_DETECTED"}
                   </div>
-                  <div className="mt-3 p-3 bg-cyan-950/40 border border-cyan-800/50 rounded-xl text-xs text-cyan-200">
-                    <p className="font-semibold">تفسير فيزياء المكمن:</p>
-                    <p className="mt-1 text-slate-300 leading-relaxed">
+                  <div className="mt-4 p-4 bg-red-950/40 border border-red-800/60 rounded-xl text-xs sm:text-sm text-red-200">
+                    <p className="font-bold text-white">تفسير فيزياء المكمن:</p>
+                    <p className="mt-1 text-zinc-300 leading-relaxed font-medium">
                       {chanResult.diagnosis_explanation ||
                         "تسارع ميل مشتقة نسبة الماء للنفط (WOR Derivative) يشير إلى اختراق قنوات عالية النفاذية (High-Permeability Water Channeling) دون انخفاض الضغط الهيدروستاتيكي."}
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-slate-800 text-xs">
-                  <span className="text-slate-400 block text-[11px] font-semibold">التوصية الهندسية المعتمدة:</span>
-                  <p className="text-amber-300 font-bold mt-1">
+                <div className="mt-6 pt-4 border-t border-zinc-800 text-xs sm:text-sm">
+                  <span className="text-zinc-400 block text-xs font-bold uppercase">التوصية الهندسية المعتمدة:</span>
+                  <p className="text-red-400 font-bold mt-1 text-sm sm:text-base">
                     {chanResult.remedial_recommendation || "يوصى بحقن جل بوليمري عازل (Polymer Gel Conformance Treatment) أو غلق التثقيبات السفلية."}
                   </p>
                 </div>
               </div>
 
               {/* Slope Analysis & Data Metrics */}
-              <div className="lg:col-span-2 bg-[#080e1b] border border-slate-800 rounded-xl p-5 space-y-4">
-                <h4 className="text-xs font-bold text-slate-300 flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-cyan-400" />
+              <div className="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-5">
+                <h4 className="text-sm font-black text-white flex items-center gap-2 uppercase tracking-wide">
+                  <Activity className="w-5 h-5 text-red-500" />
                   <span>تحليل المشتقات اللوغاريتمية (Log-Log Slope Diagnostics)</span>
                 </h4>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  <div className="bg-[#050912] border border-slate-800/80 p-3 rounded-xl">
-                    <span className="text-[10px] text-slate-400 block font-semibold">WOR Slope (ميل النسبة):</span>
-                    <span className="text-lg font-black font-mono text-white mt-1 block">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  <div className="bg-[#0e0e11] border border-zinc-800 p-4 rounded-xl">
+                    <span className="text-xs text-zinc-400 block font-bold">WOR Slope (ميل النسبة):</span>
+                    <span className="text-2xl font-black font-mono text-white mt-1 block">
                       {chanResult.wor_slope ? chanResult.wor_slope.toFixed(2) : "+1.85"}
                     </span>
-                    <span className="text-[10px] text-cyan-400 mt-0.5 block">تصاعد حاد مستمر</span>
+                    <span className="text-xs text-red-400 mt-1 block font-bold">تصاعد حاد مستمر</span>
                   </div>
 
-                  <div className="bg-[#050912] border border-slate-800/80 p-3 rounded-xl">
-                    <span className="text-[10px] text-slate-400 block font-semibold">WOR' Derivative Slope:</span>
-                    <span className="text-lg font-black font-mono text-amber-400 mt-1 block">
+                  <div className="bg-[#0e0e11] border border-zinc-800 p-4 rounded-xl">
+                    <span className="text-xs text-zinc-400 block font-bold">WOR' Derivative Slope:</span>
+                    <span className="text-2xl font-black font-mono text-red-400 mt-1 block">
                       {chanResult.wor_derivative_slope ? chanResult.wor_derivative_slope.toFixed(2) : "+2.14"}
                     </span>
-                    <span className="text-[10px] text-amber-400 mt-0.5 block">تسارع قنوات مائية</span>
+                    <span className="text-xs text-red-400 mt-1 block font-bold">تسارع قنوات مائية</span>
                   </div>
 
-                  <div className="bg-[#050912] border border-slate-800/80 p-3 rounded-xl">
-                    <span className="text-[10px] text-slate-400 block font-semibold">معامل الثقة الفيزيائي:</span>
-                    <span className="text-lg font-black font-mono text-emerald-400 mt-1 block">94.8%</span>
-                    <span className="text-[10px] text-emerald-400 mt-0.5 block">بيانات معتمدة</span>
+                  <div className="bg-[#0e0e11] border border-zinc-800 p-4 rounded-xl">
+                    <span className="text-xs text-zinc-400 block font-bold">معامل الثقة الفيزيائي:</span>
+                    <span className="text-2xl font-black font-mono text-white mt-1 block">94.8%</span>
+                    <span className="text-xs text-emerald-400 mt-1 block font-bold">بيانات معتمدة</span>
                   </div>
                 </div>
 
-                <div className="p-3 bg-[#060c18] border border-slate-800 rounded-xl text-xs space-y-1.5 font-mono text-slate-300">
-                  <div className="text-[11px] text-slate-400 font-sans font-semibold mb-1">
+                <div className="p-4 bg-[#0e0e11] border border-zinc-800 rounded-xl text-xs sm:text-sm space-y-2 font-mono text-zinc-300">
+                  <div className="text-xs text-zinc-400 font-sans font-bold uppercase mb-2">
                     نقاط المنحنى المسجلة للبئر {selectedWellCode}:
                   </div>
-                  <div className="flex justify-between border-b border-slate-800/60 pb-1 text-[11px] text-slate-400">
+                  <div className="flex justify-between border-b border-zinc-800 pb-2 text-xs font-bold text-zinc-400">
                     <span>الزمن (يوم)</span>
                     <span>WOR (النسبة)</span>
                     <span>WOR' (المشتقة)</span>
@@ -543,10 +542,10 @@ export function ReservoirEnginesHub() {
                     { time: 270, wor: 2.40, d_wor: 3.20, np: 105000 },
                     { time: 365, wor: 5.60, d_wor: 7.80, np: 128000 },
                   ]).map((pt: any, i: number) => (
-                    <div key={i} className="flex justify-between text-[11px]">
+                    <div key={i} className="flex justify-between py-1 border-b border-zinc-800/40 text-xs sm:text-sm">
                       <span>{pt.time || pt.time_days} days</span>
-                      <span className="text-cyan-400">{(pt.wor || 0).toFixed(2)}</span>
-                      <span className="text-amber-400">{(pt.d_wor || pt.wor_derivative || 0).toFixed(2)}</span>
+                      <span className="text-white font-bold">{(pt.wor || 0).toFixed(2)}</span>
+                      <span className="text-red-400 font-bold">{(pt.d_wor || pt.wor_derivative || 0).toFixed(2)}</span>
                       <span>{(pt.np || pt.cum_oil_stb || 0).toLocaleString()} STB</span>
                     </div>
                   ))}
@@ -561,18 +560,18 @@ export function ReservoirEnginesHub() {
       {/* TAB 3: VOGEL / DARCY IPR ENGINE WORKFLOW                       */}
       {/* ============================================================== */}
       {activeTab === "vogel" && (
-        <div className="bg-[#0b1322] border border-emerald-500/30 rounded-2xl p-6 shadow-xl space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+        <div className="bg-[#0e0e11] border border-red-600/40 rounded-3xl p-8 shadow-2xl space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-800">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">
+              <div className="flex items-center gap-3">
+                <span className="px-3 py-1 rounded-md text-xs font-mono font-black bg-red-950 text-red-300 border border-red-800">
                   Engine #13
                 </span>
-                <h3 className="text-lg font-black text-white">
+                <h3 className="text-xl font-black text-white">
                   Vogel Inflow Performance Relationship (IPR) Engine
                 </h3>
               </div>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-sm text-zinc-300 mt-1">
                 المرجع المعتمد: J.V. Vogel (1968) SPE 1476: Inflow Performance Relationships for Solution-Gas Drive Wells.
               </p>
             </div>
@@ -580,90 +579,90 @@ export function ReservoirEnginesHub() {
             <button
               onClick={handleRunVogel}
               disabled={vogelLoading}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl text-xs font-bold shadow-md transition disabled:opacity-50"
+              className="flex items-center gap-2.5 px-5 py-3 bg-red-600 hover:bg-red-500 text-white rounded-xl text-sm font-black shadow-lg shadow-red-600/30 transition disabled:opacity-50"
             >
-              {vogelLoading ? <RotateCcw className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5" />}
+              {vogelLoading ? <RotateCcw className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
               <span>حساب منحنى الـ IPR للبئر {selectedWellCode}</span>
             </button>
           </div>
 
           {/* Form Inputs Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-[#080e1b] border border-slate-800 p-4 rounded-xl text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-zinc-900 border border-zinc-800 p-5 rounded-2xl text-xs sm:text-sm">
             <div>
-              <label className="text-slate-400 block font-semibold mb-1">ضغط المكمن Pr (psia):</label>
+              <label className="text-zinc-300 block font-bold mb-1.5">ضغط المكمن Pr (psia):</label>
               <input
                 type="number"
                 value={prPsia}
                 onChange={(e) => setPrPsia(e.target.value)}
-                className="w-full bg-[#050912] border border-slate-700 rounded-lg px-3 py-1.5 text-white font-mono"
+                className="w-full bg-[#0e0e11] border border-zinc-700 rounded-xl px-4 py-2.5 text-white font-mono text-base font-bold focus:border-red-500 focus:outline-none"
               />
             </div>
             <div>
-              <label className="text-slate-400 block font-semibold mb-1">ضغط القاع الجرياني Pwf (psia):</label>
+              <label className="text-zinc-300 block font-bold mb-1.5">ضغط القاع الجرياني Pwf (psia):</label>
               <input
                 type="number"
                 value={pwfPsia}
                 onChange={(e) => setPwfPsia(e.target.value)}
-                className="w-full bg-[#050912] border border-slate-700 rounded-lg px-3 py-1.5 text-white font-mono"
+                className="w-full bg-[#0e0e11] border border-zinc-700 rounded-xl px-4 py-2.5 text-white font-mono text-base font-bold focus:border-red-500 focus:outline-none"
               />
             </div>
             <div>
-              <label className="text-slate-400 block font-semibold mb-1">معدل الاختبار Qo (STB/D):</label>
+              <label className="text-zinc-300 block font-bold mb-1.5">معدل الاختبار Qo (STB/D):</label>
               <input
                 type="number"
                 value={testRate}
                 onChange={(e) => setTestRate(e.target.value)}
-                className="w-full bg-[#050912] border border-slate-700 rounded-lg px-3 py-1.5 text-white font-mono"
+                className="w-full bg-[#0e0e11] border border-zinc-700 rounded-xl px-4 py-2.5 text-white font-mono text-base font-bold focus:border-red-500 focus:outline-none"
               />
             </div>
             <div>
-              <label className="text-slate-400 block font-semibold mb-1">ضغط نقطة الفقاعة Pb (psia):</label>
+              <label className="text-zinc-300 block font-bold mb-1.5">ضغط نقطة الفقاعة Pb (psia):</label>
               <input
                 type="number"
                 value={pbPsia}
                 onChange={(e) => setPbPsia(e.target.value)}
-                className="w-full bg-[#050912] border border-slate-700 rounded-lg px-3 py-1.5 text-white font-mono"
+                className="w-full bg-[#0e0e11] border border-zinc-700 rounded-xl px-4 py-2.5 text-white font-mono text-base font-bold focus:border-red-500 focus:outline-none"
               />
             </div>
           </div>
 
           {vogelResult && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-[#080e1b] border border-emerald-500/40 rounded-xl p-5">
-                <span className="text-xs font-semibold text-slate-400 block">أقصى إنتاجية مفتوحة (AOFP):</span>
-                <div className="text-3xl font-black font-mono text-emerald-400 mt-1">
+              <div className="bg-zinc-900 border border-red-600/60 rounded-2xl p-6 shadow-xl">
+                <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">أقصى إنتاجية مفتوحة (AOFP):</span>
+                <div className="text-4xl font-black font-mono text-red-400 mt-2">
                   {typeof vogelResult.value === "object" && vogelResult.value?.aof_stbd
                     ? vogelResult.value.aof_stbd.toFixed(1)
                     : typeof vogelResult.value === "number"
                     ? vogelResult.value.toFixed(1)
                     : "1,148.5"}{" "}
-                  <span className="text-sm font-sans font-semibold text-slate-400">STB/D</span>
+                  <span className="text-base font-sans font-bold text-zinc-400">STB/D</span>
                 </div>
-                <p className="text-xs text-slate-400 mt-2">
+                <p className="text-xs sm:text-sm text-zinc-300 mt-3 font-medium">
                   أقصى معدل تدفق نظري يمكن للبئر إنتاجه عندما يكون ضغط القاع الجرياني صفراً (Pwf = 0).
                 </p>
               </div>
 
-              <div className="bg-[#080e1b] border border-slate-800 rounded-xl p-5">
-                <span className="text-xs font-semibold text-slate-400 block">دليل الإنتاجية (Productivity Index J):</span>
-                <div className="text-3xl font-black font-mono text-cyan-300 mt-1">
+              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-xl">
+                <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">دليل الإنتاجية (Productivity Index J):</span>
+                <div className="text-4xl font-black font-mono text-white mt-2">
                   {typeof vogelResult.value === "object" && vogelResult.value?.pi_stbd_psi
                     ? vogelResult.value.pi_stbd_psi.toFixed(2)
                     : "0.60"}{" "}
-                  <span className="text-sm font-sans font-semibold text-slate-400">STB/D/psi</span>
+                  <span className="text-base font-sans font-bold text-zinc-400">STB/D/psi</span>
                 </div>
-                <p className="text-xs text-slate-400 mt-2">
+                <p className="text-xs sm:text-sm text-zinc-300 mt-3 font-medium">
                   معدل استجابة تدفق المائع لكل رطل هبوط في ضغط القاع الجرياني.
                 </p>
               </div>
 
-              <div className="bg-[#080e1b] border border-slate-800 rounded-xl p-5">
-                <span className="text-xs font-semibold text-slate-400 block">هبوط الضغط التشغيلي (Drawdown):</span>
-                <div className="text-3xl font-black font-mono text-amber-400 mt-1">
+              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-xl">
+                <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">هبوط الضغط التشغيلي (Drawdown):</span>
+                <div className="text-4xl font-black font-mono text-zinc-200 mt-2">
                   {(parseFloat(prPsia) - parseFloat(pwfPsia)).toFixed(0)}{" "}
-                  <span className="text-sm font-sans font-semibold text-slate-400">psi</span>
+                  <span className="text-base font-sans font-bold text-zinc-400">psi</span>
                 </div>
-                <p className="text-xs text-slate-400 mt-2">
+                <p className="text-xs sm:text-sm text-zinc-300 mt-3 font-medium">
                   فارق الضغط بين المكمن وقاع البئر محكوم بحدود الفيزياء لتجنب هبوط الضغط الحرج.
                 </p>
               </div>
@@ -676,18 +675,18 @@ export function ReservoirEnginesHub() {
       {/* TAB 4: VIRTUAL FLOW METERING (VFM) WORKFLOW                    */}
       {/* ============================================================== */}
       {activeTab === "vfm" && (
-        <div className="bg-[#0b1322] border border-amber-500/30 rounded-2xl p-6 shadow-xl space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+        <div className="bg-[#0e0e11] border border-red-600/40 rounded-3xl p-8 shadow-2xl space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-800">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-950 text-amber-300 border border-amber-800">
+              <div className="flex items-center gap-3">
+                <span className="px-3 py-1 rounded-md text-xs font-mono font-black bg-red-950 text-red-300 border border-red-800">
                   Engine #1
                 </span>
-                <h3 className="text-lg font-black text-white">
+                <h3 className="text-xl font-black text-white">
                   Virtual Flow Metering (VFM) & Choke Engine (القياس الافتراضي للتدفق)
                 </h3>
               </div>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-sm text-zinc-300 mt-1">
                 المرجع المعتمد: Perkins (1993) SPE 26649 & Gilbert (1954): Multiphase Flow Through Subcritical & Critical Chokes.
               </p>
             </div>
@@ -695,85 +694,85 @@ export function ReservoirEnginesHub() {
             <button
               onClick={handleRunVfm}
               disabled={vfmLoading}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white rounded-xl text-xs font-bold shadow-md transition disabled:opacity-50"
+              className="flex items-center gap-2.5 px-5 py-3 bg-red-600 hover:bg-red-500 text-white rounded-xl text-sm font-black shadow-lg shadow-red-600/30 transition disabled:opacity-50"
             >
-              {vfmLoading ? <RotateCcw className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5" />}
+              {vfmLoading ? <RotateCcw className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
               <span>حساب معدلات التدفق الافتراضية للبئر {selectedWellCode}</span>
             </button>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 bg-[#080e1b] border border-slate-800 p-4 rounded-xl text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 bg-zinc-900 border border-zinc-800 p-5 rounded-2xl text-xs sm:text-sm">
             <div>
-              <label className="text-slate-400 block font-semibold mb-1">ضغط رأس البئر WHP (psia):</label>
+              <label className="text-zinc-300 block font-bold mb-1.5">ضغط رأس البئر WHP (psia):</label>
               <input
                 type="number"
                 value={whpPsia}
                 onChange={(e) => setWhpPsia(e.target.value)}
-                className="w-full bg-[#050912] border border-slate-700 rounded-lg px-3 py-1.5 text-white font-mono"
+                className="w-full bg-[#0e0e11] border border-zinc-700 rounded-xl px-3.5 py-2.5 text-white font-mono text-sm font-bold"
               />
             </div>
             <div>
-              <label className="text-slate-400 block font-semibold mb-1">حرارة رأس البئر WHT (°F):</label>
+              <label className="text-zinc-300 block font-bold mb-1.5">حرارة رأس البئر WHT (°F):</label>
               <input
                 type="number"
                 value={whtF}
                 onChange={(e) => setWhtF(e.target.value)}
-                className="w-full bg-[#050912] border border-slate-700 rounded-lg px-3 py-1.5 text-white font-mono"
+                className="w-full bg-[#0e0e11] border border-zinc-700 rounded-xl px-3.5 py-2.5 text-white font-mono text-sm font-bold"
               />
             </div>
             <div>
-              <label className="text-slate-400 block font-semibold mb-1">فتحة الخانق Choke (0-1):</label>
+              <label className="text-zinc-300 block font-bold mb-1.5">فتحة الخانق Choke (0-1):</label>
               <input
                 type="number"
                 step="0.05"
                 value={chokeFrac}
                 onChange={(e) => setChokeFrac(e.target.value)}
-                className="w-full bg-[#050912] border border-slate-700 rounded-lg px-3 py-1.5 text-white font-mono"
+                className="w-full bg-[#0e0e11] border border-zinc-700 rounded-xl px-3.5 py-2.5 text-white font-mono text-sm font-bold"
               />
             </div>
             <div>
-              <label className="text-slate-400 block font-semibold mb-1">نسبة الماء المقدرة (%):</label>
+              <label className="text-zinc-300 block font-bold mb-1.5">نسبة الماء المقدرة (%):</label>
               <input
                 type="number"
                 value={vfmWcPct}
                 onChange={(e) => setVfmWcPct(e.target.value)}
-                className="w-full bg-[#050912] border border-slate-700 rounded-lg px-3 py-1.5 text-white font-mono"
+                className="w-full bg-[#0e0e11] border border-zinc-700 rounded-xl px-3.5 py-2.5 text-white font-mono text-sm font-bold"
               />
             </div>
             <div>
-              <label className="text-slate-400 block font-semibold mb-1">نسبة الغاز للنفط GOR:</label>
+              <label className="text-zinc-300 block font-bold mb-1.5">نسبة الغاز للنفط GOR:</label>
               <input
                 type="number"
                 value={vfmGor}
                 onChange={(e) => setVfmGor(e.target.value)}
-                className="w-full bg-[#050912] border border-slate-700 rounded-lg px-3 py-1.5 text-white font-mono"
+                className="w-full bg-[#0e0e11] border border-zinc-700 rounded-xl px-3.5 py-2.5 text-white font-mono text-sm font-bold"
               />
             </div>
           </div>
 
           {vfmResult && (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="bg-[#080e1b] border border-amber-500/40 p-5 rounded-xl">
-                <span className="text-xs text-slate-400 font-semibold block">معدل النفط الافتراضي (VFM Oil Rate):</span>
-                <div className="text-2xl font-black font-mono text-amber-400 mt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              <div className="bg-zinc-900 border border-red-600/50 p-6 rounded-2xl shadow-xl">
+                <span className="text-xs text-zinc-400 font-bold uppercase tracking-wider block">معدل النفط الافتراضي (VFM Oil Rate):</span>
+                <div className="text-3xl font-black font-mono text-red-400 mt-2">
                   {vfmResult.value?.oil_rate_stbd?.toFixed(1) || "542.0"}{" "}
-                  <span className="text-xs font-sans text-slate-400">STB/D</span>
+                  <span className="text-sm font-sans font-bold text-zinc-400">STB/D</span>
                 </div>
               </div>
 
-              <div className="bg-[#080e1b] border border-cyan-500/40 p-5 rounded-xl">
-                <span className="text-xs text-slate-400 font-semibold block">معدل الماء الافتراضي (VFM Water Rate):</span>
-                <div className="text-2xl font-black font-mono text-cyan-400 mt-1">
+              <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-xl">
+                <span className="text-xs text-zinc-400 font-bold uppercase tracking-wider block">معدل الماء الافتراضي (VFM Water Rate):</span>
+                <div className="text-3xl font-black font-mono text-white mt-2">
                   {vfmResult.value?.water_rate_stbd?.toFixed(1) || "291.8"}{" "}
-                  <span className="text-xs font-sans text-slate-400">STB/D</span>
+                  <span className="text-sm font-sans font-bold text-zinc-400">STB/D</span>
                 </div>
               </div>
 
-              <div className="bg-[#080e1b] border border-emerald-500/40 p-5 rounded-xl">
-                <span className="text-xs text-slate-400 font-semibold block">معدل الغاز الافتراضي (VFM Gas Rate):</span>
-                <div className="text-2xl font-black font-mono text-emerald-400 mt-1">
+              <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-xl">
+                <span className="text-xs text-zinc-400 font-bold uppercase tracking-wider block">معدل الغاز الافتراضي (VFM Gas Rate):</span>
+                <div className="text-3xl font-black font-mono text-zinc-300 mt-2">
                   {vfmResult.value?.gas_rate_mscfd?.toFixed(1) || "243.9"}{" "}
-                  <span className="text-xs font-sans text-slate-400">Mscf/D</span>
+                  <span className="text-sm font-sans font-bold text-zinc-400">Mscf/D</span>
                 </div>
               </div>
             </div>
@@ -785,18 +784,18 @@ export function ReservoirEnginesHub() {
       {/* TAB 5: HAVLENA & ODEH MATERIAL BALANCE (MBE) WORKFLOW          */}
       {/* ============================================================== */}
       {activeTab === "mbe" && (
-        <div className="bg-[#0b1322] border border-purple-500/30 rounded-2xl p-6 shadow-xl space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+        <div className="bg-[#0e0e11] border border-red-600/40 rounded-3xl p-8 shadow-2xl space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-800">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-purple-950 text-purple-300 border border-purple-800">
+              <div className="flex items-center gap-3">
+                <span className="px-3 py-1 rounded-md text-xs font-mono font-black bg-red-950 text-red-300 border border-red-800">
                   Engine #10
                 </span>
-                <h3 className="text-lg font-black text-white">
+                <h3 className="text-xl font-black text-white">
                   Havlena & Odeh Material Balance Engine (توازن المواد ودوافع المكمن)
                 </h3>
               </div>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-sm text-zinc-300 mt-1">
                 المرجع المعتمد: Havlena & Odeh (1963) SPE 559: The Material Balance as an Equation of a Straight Line.
               </p>
             </div>
@@ -804,52 +803,52 @@ export function ReservoirEnginesHub() {
             <button
               onClick={handleRunMbe}
               disabled={mbeLoading}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl text-xs font-bold shadow-md transition disabled:opacity-50"
+              className="flex items-center gap-2.5 px-5 py-3 bg-red-600 hover:bg-red-500 text-white rounded-xl text-sm font-black shadow-lg shadow-red-600/30 transition disabled:opacity-50"
             >
-              {mbeLoading ? <RotateCcw className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5" />}
+              {mbeLoading ? <RotateCcw className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
               <span>حساب ميزان المواد ودوافع الاستنزاف</span>
             </button>
           </div>
 
           {mbeResult && (
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="bg-[#080e1b] border border-blue-500/40 p-4 rounded-xl">
-                <span className="text-xs text-slate-400 font-semibold block">دافع تدفق المياه (Water Drive Index):</span>
-                <div className="text-2xl font-black font-mono text-blue-400 mt-1">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+              <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl shadow-xl">
+                <span className="text-xs text-zinc-400 font-bold uppercase block">دافع تدفق المياه (Water Drive Index):</span>
+                <div className="text-3xl font-black font-mono text-red-400 mt-2">
                   {(mbeResult.value?.drive_indices?.water_drive_index || 0.48 * 100).toFixed(1)}%
                 </div>
-                <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
-                  <div className="bg-blue-500 h-full rounded-full" style={{ width: "48%" }}></div>
+                <div className="w-full bg-zinc-800 h-2 rounded-full mt-3 overflow-hidden">
+                  <div className="bg-red-600 h-full rounded-full" style={{ width: "48%" }}></div>
                 </div>
               </div>
 
-              <div className="bg-[#080e1b] border border-emerald-500/40 p-4 rounded-xl">
-                <span className="text-xs text-slate-400 font-semibold block">دافع الغاز المذاب (Solution Gas Index):</span>
-                <div className="text-2xl font-black font-mono text-emerald-400 mt-1">
+              <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl shadow-xl">
+                <span className="text-xs text-zinc-400 font-bold uppercase block">دافع الغاز المذاب (Solution Gas Index):</span>
+                <div className="text-3xl font-black font-mono text-white mt-2">
                   {(mbeResult.value?.drive_indices?.depletion_drive_index || 0.35 * 100).toFixed(1)}%
                 </div>
-                <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
-                  <div className="bg-emerald-500 h-full rounded-full" style={{ width: "35%" }}></div>
+                <div className="w-full bg-zinc-800 h-2 rounded-full mt-3 overflow-hidden">
+                  <div className="bg-zinc-400 h-full rounded-full" style={{ width: "35%" }}></div>
                 </div>
               </div>
 
-              <div className="bg-[#080e1b] border border-amber-500/40 p-4 rounded-xl">
-                <span className="text-xs text-slate-400 font-semibold block">دافع القبعة الغازية (Gas Cap Index):</span>
-                <div className="text-2xl font-black font-mono text-amber-400 mt-1">
+              <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl shadow-xl">
+                <span className="text-xs text-zinc-400 font-bold uppercase block">دافع القبعة الغازية (Gas Cap Index):</span>
+                <div className="text-3xl font-black font-mono text-red-300 mt-2">
                   {(mbeResult.value?.drive_indices?.gas_cap_drive_index || 0.12 * 100).toFixed(1)}%
                 </div>
-                <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
-                  <div className="bg-amber-500 h-full rounded-full" style={{ width: "12%" }}></div>
+                <div className="w-full bg-zinc-800 h-2 rounded-full mt-3 overflow-hidden">
+                  <div className="bg-red-800 h-full rounded-full" style={{ width: "12%" }}></div>
                 </div>
               </div>
 
-              <div className="bg-[#080e1b] border border-purple-500/40 p-4 rounded-xl">
-                <span className="text-xs text-slate-400 font-semibold block">تمدد الصخور والسوائل (Expansion):</span>
-                <div className="text-2xl font-black font-mono text-purple-400 mt-1">
+              <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl shadow-xl">
+                <span className="text-xs text-zinc-400 font-bold uppercase block">تمدد الصخور والسوائل (Expansion):</span>
+                <div className="text-3xl font-black font-mono text-zinc-300 mt-2">
                   {(mbeResult.value?.drive_indices?.formation_expansion_index || 0.05 * 100).toFixed(1)}%
                 </div>
-                <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
-                  <div className="bg-purple-500 h-full rounded-full" style={{ width: "5%" }}></div>
+                <div className="w-full bg-zinc-800 h-2 rounded-full mt-3 overflow-hidden">
+                  <div className="bg-zinc-600 h-full rounded-full" style={{ width: "5%" }}></div>
                 </div>
               </div>
             </div>
@@ -861,18 +860,18 @@ export function ReservoirEnginesHub() {
       {/* TAB 6: DECLINE CURVE ANALYSIS (DCA - ARPS)                     */}
       {/* ============================================================== */}
       {activeTab === "dca" && (
-        <div className="bg-[#0b1322] border border-rose-500/30 rounded-2xl p-6 shadow-xl space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+        <div className="bg-[#0e0e11] border border-red-600/40 rounded-3xl p-8 shadow-2xl space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-800">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-rose-950 text-rose-300 border border-rose-800">
+              <div className="flex items-center gap-3">
+                <span className="px-3 py-1 rounded-md text-xs font-mono font-black bg-red-950 text-red-300 border border-red-800">
                   Engine #14
                 </span>
-                <h3 className="text-lg font-black text-white">
+                <h3 className="text-xl font-black text-white">
                   Decline Curve Analysis (DCA - Arps Model)
                 </h3>
               </div>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-sm text-zinc-300 mt-1">
                 المرجع المعتمد: J.J. Arps (1945) SPE-TR 985: Analysis of Decline Curves (Hyperbolic / Exponential / Harmonic).
               </p>
             </div>
@@ -880,46 +879,46 @@ export function ReservoirEnginesHub() {
             <button
               onClick={handleRunDca}
               disabled={dcaLoading}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white rounded-xl text-xs font-bold shadow-md transition disabled:opacity-50"
+              className="flex items-center gap-2.5 px-5 py-3 bg-red-600 hover:bg-red-500 text-white rounded-xl text-sm font-black shadow-lg shadow-red-600/30 transition disabled:opacity-50"
             >
-              {dcaLoading ? <RotateCcw className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5" />}
+              {dcaLoading ? <RotateCcw className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
               <span>حساب منحنى الانحدار والاحتياطي المتبقي</span>
             </button>
           </div>
 
           {dcaResult && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-[#080e1b] border border-rose-500/40 rounded-xl p-5">
-                <span className="text-xs font-semibold text-slate-400 block">الاحتياطي النهائي المسترد (EUR):</span>
-                <div className="text-3xl font-black font-mono text-rose-400 mt-1">
+              <div className="bg-zinc-900 border border-red-600/60 rounded-2xl p-6 shadow-xl">
+                <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">الاحتياطي النهائي المسترد (EUR):</span>
+                <div className="text-4xl font-black font-mono text-red-400 mt-2">
                   {dcaResult.value?.eur_stb ? dcaResult.value.eur_stb.toLocaleString() : "845,200"}{" "}
-                  <span className="text-sm font-sans font-semibold text-slate-400">STB</span>
+                  <span className="text-base font-sans font-bold text-zinc-400">STB</span>
                 </div>
-                <p className="text-xs text-slate-400 mt-2">
+                <p className="text-xs sm:text-sm text-zinc-300 mt-3 font-medium">
                   تقدير الاحتياطي النهائي حتى الوصول للحد الاقتصادي للبئر (Economic Limit).
                 </p>
               </div>
 
-              <div className="bg-[#080e1b] border border-slate-800 rounded-xl p-5">
-                <span className="text-xs font-semibold text-slate-400 block">الاحتياطي المتبقي (Remaining Reserves):</span>
-                <div className="text-3xl font-black font-mono text-amber-300 mt-1">
+              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-xl">
+                <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">الاحتياطي المتبقي (Remaining Reserves):</span>
+                <div className="text-4xl font-black font-mono text-white mt-2">
                   {dcaResult.value?.remaining_reserves_stb
                     ? dcaResult.value.remaining_reserves_stb.toLocaleString()
                     : "312,400"}{" "}
-                  <span className="text-sm font-sans font-semibold text-slate-400">STB</span>
+                  <span className="text-base font-sans font-bold text-zinc-400">STB</span>
                 </div>
-                <p className="text-xs text-slate-400 mt-2">
+                <p className="text-xs sm:text-sm text-zinc-300 mt-3 font-medium">
                   الكمية المتبقية القابلة للإنتاج تحت ظروف التشغيل الحالية.
                 </p>
               </div>
 
-              <div className="bg-[#080e1b] border border-slate-800 rounded-xl p-5">
-                <span className="text-xs font-semibold text-slate-400 block">معدل الانحدار الاسمي (Decline Rate D):</span>
-                <div className="text-3xl font-black font-mono text-cyan-300 mt-1">
+              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-xl">
+                <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">معدل الانحدار الاسمي (Decline Rate D):</span>
+                <div className="text-4xl font-black font-mono text-zinc-200 mt-2">
                   {(dcaResult.value?.nominal_decline_rate_per_year || 0.165 * 100).toFixed(1)}%{" "}
-                  <span className="text-sm font-sans font-semibold text-slate-400">/ Year</span>
+                  <span className="text-base font-sans font-bold text-zinc-400">/ Year</span>
                 </div>
-                <p className="text-xs text-slate-400 mt-2">
+                <p className="text-xs sm:text-sm text-zinc-300 mt-3 font-medium">
                   معامل الانحدار السنوي وفق معادلة آربس الهندسية.
                 </p>
               </div>

@@ -92,25 +92,25 @@ export function ManualReadingModal({ isOpen, onClose, wellCode: initialWellCode 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-150">
-      <div className="w-full max-w-lg rounded-2xl border border-cyan-500/30 bg-[#0b1322] shadow-2xl p-6 text-white font-cairo">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-in fade-in duration-150">
+      <div className="w-full max-w-xl rounded-3xl border border-red-600/40 bg-[#0e0e11] shadow-2xl p-7 text-white font-cairo">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-oilfield-700">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center">
-              <Database className="w-4 h-4 text-emerald-400" />
+        <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-red-950 border border-red-600/60 flex items-center justify-center text-red-400">
+              <Database className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-white">
+              <h2 className="text-lg font-black text-white">
                 {t("modal.manual_title")}
               </h2>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-zinc-400 mt-0.5">
                 Enter validated field data points for any monitored or new well
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1 rounded-lg text-slate-400 hover:text-white transition">
-            <X className="w-5 h-5" />
+          <button onClick={onClose} className="p-1.5 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800 transition">
+            <X className="w-6 h-6" />
           </button>
         </div>
 
@@ -245,19 +245,19 @@ export function ManualReadingModal({ isOpen, onClose, wellCode: initialWellCode 
         </div>
 
         {/* Buttons */}
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-oilfield-700">
+        <div className="flex items-center justify-end gap-3 pt-5 border-t border-zinc-800">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-xs font-semibold rounded-lg bg-oilfield-800 hover:bg-oilfield-700 text-slate-300 border border-oilfield-700 transition"
+            className="px-5 py-2.5 text-sm font-bold rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 transition"
           >
             {t("modal.cancel")}
           </button>
           <button
             onClick={() => mutation.mutate()}
             disabled={mutation.isPending}
-            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black transition shadow-lg shadow-emerald-500/25 disabled:opacity-50"
+            className="flex items-center gap-2 px-6 py-2.5 text-sm font-bold rounded-xl bg-red-600 hover:bg-red-500 text-white transition shadow-lg shadow-red-600/30 disabled:opacity-50"
           >
-            <Send className="w-3.5 h-3.5" />
+            <Send className="w-4 h-4" />
             <span>{mutation.isPending ? t("modal.submitting") : t("modal.submit")}</span>
           </button>
         </div>

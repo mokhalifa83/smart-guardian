@@ -1,14 +1,6 @@
 import type { Metadata } from "next";
-import { Cairo } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
-
-const cairo = Cairo({
-  subsets: ["arabic", "latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-cairo",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Smart Guardian | Digital Oilfield & Reservoir Intelligence",
@@ -21,8 +13,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" dir="ltr" className={`${cairo.variable}`}>
-      <body className="antialiased bg-[#070b13] text-slate-100 min-h-screen font-cairo selection:bg-cyan-500/20 selection:text-cyan-300">
+    <html lang="en" dir="ltr">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+      </head>
+      <body className="antialiased bg-[#050507] text-white min-h-screen selection:bg-red-600/30 selection:text-white">
         <Providers>{children}</Providers>
       </body>
     </html>

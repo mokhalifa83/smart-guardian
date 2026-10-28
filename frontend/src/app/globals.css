@@ -3,8 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --background: #070c16;
-  --foreground: #f8fafc;
+  --background: #050507;
+  --foreground: #ffffff;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -26,35 +32,36 @@ body {
   direction: ltr;
 }
 
-/* Custom Scrollbars */
+/* Custom Red & Black Scrollbars */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 9px;
+  height: 9px;
 }
 ::-webkit-scrollbar-track {
-  background: #070c16;
+  background: #09090b;
 }
 ::-webkit-scrollbar-thumb {
-  background: #192c4e;
-  border-radius: 4px;
+  background: #27272a;
+  border-radius: 6px;
+  border: 2px solid #09090b;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #243c68;
+  background: #dc2626;
 }
 
-/* Glassmorphic Petroleum Card Surfaces */
+/* Glassmorphic Petroleum Card Surfaces - Red & Dark Grey */
 .glass-panel {
-  background: rgba(11, 19, 34, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(36, 60, 104, 0.4);
+  background: rgba(18, 18, 20, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(220, 38, 38, 0.25);
 }
 
 .glass-panel-hover {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .glass-panel-hover:hover {
-  border-color: rgba(0, 229, 255, 0.4);
-  box-shadow: 0 10px 30px -10px rgba(0, 229, 255, 0.15);
+  border-color: rgba(239, 68, 68, 0.6);
+  box-shadow: 0 10px 30px -10px rgba(220, 38, 38, 0.3);
   transform: translateY(-2px);
 }

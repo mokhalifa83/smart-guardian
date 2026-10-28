@@ -14,6 +14,7 @@ import { SeparatorReadingModal } from "@/components/SeparatorReadingModal";
 import { WellManagementModal } from "@/components/WellManagementModal";
 import { SupervisoryModeModal } from "@/components/SupervisoryModeModal";
 import { formatDateTime } from "@/lib/utils";
+import { ReservoirEnginesHub } from "@/components/ReservoirEnginesHub";
 import {
   RefreshCw,
   Sliders,
@@ -24,12 +25,14 @@ import {
   Server,
   Layers,
   Activity,
+  Cpu,
 } from "lucide-react";
 
 export function Dashboard() {
   const { t } = useLanguage();
   const { selectedWellCode, selectedWell } = useWell();
 
+  const [dashboardView, setDashboardView] = useState<"surveillance" | "engines">("surveillance");
   const [isManualModalOpen, setIsManualModalOpen] = useState(false);
   const [isSeparatorModalOpen, setIsSeparatorModalOpen] = useState(false);
   const [isConfigModalOpen, setIsConfigModalOpen] = useState(false);
@@ -114,102 +117,152 @@ export function Dashboard() {
           </div>
         </div>
 
-        {/* Global Surveillance State Banner */}
-        {dashboard && (
-          <div
-            className={`rounded-xl border p-4 flex items-center justify-between transition-all ${
-              dashboard.surveillance_state === "WARNING"
-                ? "bg-amber-950/40 border-amber-500/40 text-amber-200"
-                : dashboard.surveillance_state === "NORMAL"
-                ? "bg-emerald-950/40 border-emerald-500/40 text-emerald-200"
-                : "bg-slate-900/80 border-slate-700 text-slate-300"
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              {dashboard.surveillance_state === "WARNING" ? (
-                <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
-              ) : dashboard.surveillance_state === "NORMAL" ? (
-                <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
-              ) : (
-                <HelpCircle className="w-5 h-5 text-slate-400 shrink-0" />
-              )}
-              <div>
-                <span className="text-xs font-bold uppercase tracking-wider">
-                  Surveillance Condition: {dashboard.surveillance_state}
-                </span>
-                <p className="text-xs text-slate-300 mt-0.5">
-                  {dashboard.surveillance_state === "WARNING"
-                    ? "Production threshold exceedance detected on monitored asset. Operational review required."
+        {/* View Mode Switcher: Real-Time Surveillance vs 36 Reservoir Engines */}
+        <div className="flex flex-wrap items-center justify-between gap-3 bg-[#0a1120] border border-slate-800 p-2 rounded-2xl">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setDashboardView("surveillance")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
+                dashboardView === "surveillance"
+                  ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-600/30"
+                  : "text-slate-400 hover:text-slate-200 hover:bg-[#0f172a]"
+              }`}
+            >
+              <Activity className="w-4 h-4" />
+              <span>المراقبة الحقلية المباشرة والإنذار المبكر (Field Surveillance & Alerts)</span>
+            </button>
+
+            <button
+              onClick={() => setDashboardView("engines")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
+                dashboardView === "engines"
+                  ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-600/30"
+                  : "text-slate-400 hover:text-slate-200 hover:bg-[#0f172a]"
+              }`}
+            >
+              <Cpu className="w-4 h-4" />
+              <span>محركات المكمن والذكاء الهندسي (36 Physics Engines Hub)</span>
+              <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-950 text-indigo-300 border border-indigo-700">
+                36
+              </span>
+            </button>
+          </div>
+
+          <div className="text-[11px] text-slate-400 font-mono hidden md:block px-3">
+            Active Well: <span className="text-cyan-300 font-bold">{selectedWellCode}</span>
+          </div>
+        </div>
+
+        {/* ========================================================= */}
+        {/* VIEW 1: FIELD SURVEILLANCE & REAL-TIME ALERTS VIEW       */}
+        {/* ========================================================= */}
+        {dashboardView === "surveillance" && (
+          <div className="space-y-6">
+            {/* Global Surveillance State Banner */}
+            {dashboard && (
+              <div
+                className={`rounded-xl border p-4 flex items-center justify-between transition-all ${
+                  dashboard.surveillance_state === "WARNING"
+                    ? "bg-amber-950/40 border-amber-500/40 text-amber-200"
                     : dashboard.surveillance_state === "NORMAL"
-                    ? "Wellhead telemetry operating within validated engineering envelope."
-                    : "Telemetry data is currently unavailable. Waiting for sensor stream."}
-                </p>
+                    ? "bg-emerald-950/40 border-emerald-500/40 text-emerald-200"
+                    : "bg-slate-900/80 border-slate-700 text-slate-300"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  {dashboard.surveillance_state === "WARNING" ? (
+                    <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
+                  ) : dashboard.surveillance_state === "NORMAL" ? (
+                    <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+                  ) : (
+                    <HelpCircle className="w-5 h-5 text-slate-400 shrink-0" />
+                  )}
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-wider">
+                      Surveillance Condition: {dashboard.surveillance_state}
+                    </span>
+                    <p className="text-xs text-slate-300 mt-0.5">
+                      {dashboard.surveillance_state === "WARNING"
+                        ? "Production threshold exceedance detected on monitored asset. Operational review required."
+                        : dashboard.surveillance_state === "NORMAL"
+                        ? "Wellhead telemetry operating within validated engineering envelope."
+                        : "Telemetry data is currently unavailable. Waiting for sensor stream."}
+                    </p>
+                  </div>
+                </div>
+
+                <span className="text-[11px] font-mono font-bold px-2.5 py-1 rounded-lg bg-black/40 border border-white/10">
+                  {dashboard.surveillance_state}
+                </span>
               </div>
-            </div>
+            )}
 
-            <span className="text-[11px] font-mono font-bold px-2.5 py-1 rounded-lg bg-black/40 border border-white/10">
-              {dashboard.surveillance_state}
-            </span>
-          </div>
-        )}
+            {/* Loading & Error States */}
+            {isLoading && (
+              <div className="flex flex-col items-center justify-center p-12 text-slate-400 space-y-3">
+                <RefreshCw className="w-8 h-8 animate-spin text-cyan-400" />
+                <p className="text-sm font-semibold">Streaming surveillance telemetry...</p>
+              </div>
+            )}
 
-        {/* Loading & Error States */}
-        {isLoading && (
-          <div className="flex flex-col items-center justify-center p-12 text-slate-400 space-y-3">
-            <RefreshCw className="w-8 h-8 animate-spin text-cyan-400" />
-            <p className="text-sm font-semibold">Streaming surveillance telemetry...</p>
-          </div>
-        )}
+            {isError && (
+              <div className="p-6 rounded-2xl bg-rose-950/40 border border-rose-800 text-rose-200 flex items-center gap-3">
+                <AlertTriangle className="w-6 h-6 shrink-0" />
+                <div>
+                  <h3 className="font-bold text-sm">Failed to connect to backend surveillance engine</h3>
+                  <p className="text-xs text-rose-300 mt-1">{(error as any)?.message || "Network unreachable"}</p>
+                </div>
+              </div>
+            )}
 
-        {isError && (
-          <div className="p-6 rounded-2xl bg-rose-950/40 border border-rose-800 text-rose-200 flex items-center gap-3">
-            <AlertTriangle className="w-6 h-6 shrink-0" />
-            <div>
-              <h3 className="font-bold text-sm">Failed to connect to backend surveillance engine</h3>
-              <p className="text-xs text-rose-300 mt-1">{(error as any)?.message || "Network unreachable"}</p>
-            </div>
-          </div>
-        )}
-
-        {/* Core KPI Cards Grid */}
-        {dashboard && (
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Real-Time Surveillance Metrics
-              </h3>
-              <span className="text-[11px] text-slate-500 font-medium">
-                Distinguishes Measured vs Calculated vs Derived
-              </span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {dashboard.kpis.map((kpi) => (
-                <KpiCard key={kpi.metric_key} data={kpi} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Operational Alerts Section */}
-        {dashboard && (
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                  {t("dashboard.active_alerts")}
-                </h3>
-                {dashboard.active_alerts.length > 0 && (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-black">
-                    {dashboard.active_alerts.length}
+            {/* Core KPI Cards Grid */}
+            {dashboard && (
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    Real-Time Surveillance Metrics
+                  </h3>
+                  <span className="text-[11px] text-slate-500 font-medium">
+                    Distinguishes Measured vs Calculated vs Derived
                   </span>
-                )}
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {dashboard.kpis.map((kpi) => (
+                    <KpiCard key={kpi.metric_key} data={kpi} />
+                  ))}
+                </div>
               </div>
-              <span className="text-[11px] text-slate-500 font-medium">
-                Structured Lifecycle (ACTIVE → ACKNOWLEDGED → RESOLVED)
-              </span>
-            </div>
-            <AlertList alerts={dashboard.active_alerts} wellCode={selectedWellCode} />
+            )}
+
+            {/* Operational Alerts Section */}
+            {dashboard && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                      {t("dashboard.active_alerts")}
+                    </h3>
+                    {dashboard.active_alerts.length > 0 && (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-black">
+                        {dashboard.active_alerts.length}
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-[11px] text-slate-500 font-medium">
+                    Structured Lifecycle (ACTIVE → ACKNOWLEDGED → RESOLVED)
+                  </span>
+                </div>
+                <AlertList alerts={dashboard.active_alerts} wellCode={selectedWellCode} />
+              </div>
+            )}
           </div>
+        )}
+
+        {/* ========================================================= */}
+        {/* VIEW 2: 36 PETROLEUM & RESERVOIR PHYSICS ENGINES HUB      */}
+        {/* ========================================================= */}
+        {dashboardView === "engines" && (
+          <ReservoirEnginesHub />
         )}
 
         {/* Architectural Footer Note */}

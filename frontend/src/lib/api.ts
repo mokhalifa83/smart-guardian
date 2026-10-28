@@ -167,3 +167,149 @@ export async function writeOpcuaTag(
   }
   return res.json();
 }
+
+// ============================================================
+// 36 RESERVOIR ENGINES & PHYSICS INTELLIGENCE CLIENT APIS
+// ============================================================
+
+export interface EngineItem {
+  id: number;
+  name: string;
+  category: string;
+  spe_reference: string;
+}
+
+export interface EnginesCatalogResponse {
+  total_engines: number;
+  standards: string;
+  engines: EngineItem[];
+}
+
+export async function fetchEnginesCatalog(): Promise<EnginesCatalogResponse> {
+  const res = await fetch(`${API_BASE}/reservoir/engines/catalog`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to fetch 36 engines catalog");
+  return res.json();
+}
+
+export async function runChanDiagnostics(payload: {
+  well_code: string;
+  history: Array<{ time_days: number; wor: number; cum_oil_stb?: number }>;
+}): Promise<any> {
+  const res = await fetch(`${API_BASE}/reservoir/chan/diagnostics`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "Chan diagnostic computation failed");
+  }
+  return res.json();
+}
+
+export async function runVogelIPR(payload: {
+  reservoir_pressure_pr_psia: number;
+  flowing_pressure_pwf_psia: number;
+  test_oil_rate_stbd: number;
+  bubble_point_psia?: number;
+  well_code?: string;
+}): Promise<any> {
+  const res = await fetch(`${API_BASE}/reservoir/vogel/ipr`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "Vogel IPR calculation failed");
+  }
+  return res.json();
+}
+
+export async function runVirtualSeparator(payload: {
+  wellhead_pressure_psia: number;
+  wellhead_temperature_f: number;
+  choke_opening_fraction: number;
+  water_cut_estimate_pct: number;
+  gas_oil_ratio_estimate_scf_stb: number;
+  entity_code?: string;
+  stage_conditions?: any[];
+}): Promise<any> {
+  const res = await fetch(`${API_BASE}/reservoir/virtual-separator`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "Virtual Separator processing failed");
+  }
+  return res.json();
+}
+
+export async function runMaterialBalance(payload: {
+  reservoir_name: string;
+  initial_pressure_psia: number;
+  initial_oiip_stb: number;
+  history: Array<{
+    pressure_psia: number;
+    cum_oil_np_stb: number;
+    cum_gas_gp_scf: number;
+    cum_water_wp_stb: number;
+    cum_water_inj_wi_stb?: number;
+    pvt_bo?: number;
+    pvt_bg?: number;
+    pvt_bw?: number;
+    pvt_rs?: number;
+  }>;
+}): Promise<any> {
+  const res = await fetch(`${API_BASE}/reservoir/material-balance/havlena-odeh`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "Material Balance calculation failed");
+  }
+  return res.json();
+}
+
+export async function runDeclineAnalysis(payload: {
+  history: Array<{ time_days: number; rate_stbd: number }>;
+  forecast_days?: number;
+  economic_limit_stbd?: number;
+}): Promise<any> {
+  const res = await fetch(`${API_BASE}/reservoir/decline`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "Decline curve analysis failed");
+  }
+  return res.json();
+}
+
+export async function runWellDiagnosticOrchestration(payload: {
+  well_code: string;
+  reservoir_pressure_psia: number;
+  flowing_pressure_pwf_psia: number;
+  test_liquid_rate_stbd: number;
+  bubble_point_psia?: number;
+  chan_data?: any;
+  wc_calibration_data?: any;
+  allocation_data?: any;
+}): Promise<any> {
+  const res = await fetch(`${API_BASE}/reservoir/orchestration/well-diagnostic`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "Well diagnostic orchestration failed");
+  }
+  return res.json();
+}

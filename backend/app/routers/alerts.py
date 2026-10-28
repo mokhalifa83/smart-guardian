@@ -4,7 +4,9 @@ from sqlalchemy import select, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database.session import get_db
 from app.models.alert import Alert
+from app.models.notification import NotificationRecord
 from app.schemas.alert import AlertResponse, AlertAcknowledgeRequest, AlertResolveRequest
+from app.schemas.notification import NotificationRecordResponse
 from app.services.alert_service import AlertService
 
 router = APIRouter(prefix="/alerts", tags=["Operational Alerts"])
@@ -48,6 +50,17 @@ async def acknowledge_alert(
     return alert
 
 
+@router.get("/{alert_id}/notifications", response_model=List[NotificationRecordResponse])
+async def get_alert_notifications(
+    alert_id: str,
+    db: AsyncSession = Depends(get_db)
+):
+    """Retrieve audit history of outbound notifications for a specific alert."""
+    stmt = select(NotificationRecord).where(NotificationRecord.alert_id == alert_id).order_by(desc(NotificationRecord.created_at))
+    res = await db.execute(stmt)
+    return list(res.scalars().all())
+
+
 @router.put("/{alert_id}/resolve", response_model=AlertResponse)
 async def resolve_alert(
     alert_id: str,
@@ -67,3 +80,14 @@ async def resolve_alert(
             detail=f"Alert '{alert_id}' not found."
         )
     return alert
+
+
+@router.get("/{alert_id}/notifications", response_model=List[NotificationRecordResponse])
+async def get_alert_notifications(
+    alert_id: str,
+    db: AsyncSession = Depends(get_db)
+):
+    """Retrieve audit history of outbound notifications for a specific alert."""
+    stmt = select(NotificationRecord).where(NotificationRecord.alert_id == alert_id).order_by(desc(NotificationRecord.created_at))
+    res = await db.execute(stmt)
+    return list(res.scalars().all())

@@ -6,6 +6,7 @@ from app.models.separator import SeparatorReading
 from app.models.manual import ManualReading
 from app.models.alert import Alert
 from app.models.analysis import AnalysisResult
+from app.models.notification import NotificationRecord
 
 __all__ = [
     "Base",
@@ -15,5 +16,6 @@ __all__ = [
     "SeparatorReading",
     "ManualReading",
     "Alert",
-    "AnalysisResult"
+    "AnalysisResult",
+    "NotificationRecord"
 ]

@@ -31,3 +31,4 @@ class Alert(Base):
     )
 
     well = relationship("Well", back_populates="alerts")
+    notifications = relationship("NotificationRecord", back_populates="alert", cascade="all, delete-orphan", lazy="selectin")

@@ -68,6 +68,7 @@ class AlertService:
                 f"Alert suppressed due to cooldown ({cooldown_minutes}m) for well {well_code} [{alert_type}]",
                 extra={"structured_data": {"well_code": well_code, "alert_type": alert_type, "existing_alert_id": existing.alert_id}}
             )
+            setattr(existing, "_is_new", False)
             return existing
 
         new_alert = Alert(
@@ -86,6 +87,19 @@ class AlertService:
         db.add(new_alert)
         await db.commit()
         await db.refresh(new_alert)
+        setattr(new_alert, "_is_new", True)
+
+        # Dispatch early warning notifications downstream of cooldown
+        try:
+            from app.services.notification_dispatcher import NotificationDispatcher
+            await NotificationDispatcher.dispatch_alert_notifications(
+                db=db,
+                alert=new_alert,
+                analysis=None,
+                is_new_alert=True
+            )
+        except Exception as notif_err:
+            logger.error(f"Safe notification dispatch error: {notif_err}")
 
         logger.warning(
             f"NEW ALERT GENERATED: {message}",

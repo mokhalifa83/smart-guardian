@@ -51,6 +51,43 @@ class Settings(BaseSettings):
     API_KEY_HEADER: str = "X-API-Key"
     API_KEYS: List[str] = ["sg-dev-key-2026", "control-room-key-read-only"]
 
+    # Centralized Notification Settings (Prompt 4 & 5)
+    NOTIFICATION_MODE: str = Field(default="LOG_ONLY")  # LOG_ONLY, ACTIVE
+
+    # Email Notification Settings (Prompt 4)
+    EMAIL_NOTIFICATION_MODE: str = Field(default="LOG_ONLY")  # LOG_ONLY, ACTIVE
+    EMAIL_SMTP_HOST: Optional[str] = None
+    EMAIL_SMTP_PORT: int = Field(default=587)
+    EMAIL_SENDER: str = Field(default="alerts@smart-guardian.oil")
+    EMAIL_RECIPIENTS: List[str] = Field(default_factory=lambda: ["engineering-control-room@operator.com"])
+
+    # WhatsApp Notification Settings (Prompt 5)
+    WHATSAPP_NOTIFICATION_MODE: str = Field(default="LOG_ONLY")  # LOG_ONLY, ACTIVE
+    WHATSAPP_API_BASE_URL: str = Field(default="https://graph.facebook.com/v19.0")
+    WHATSAPP_API_TOKEN: Optional[str] = None
+    WHATSAPP_PHONE_NUMBER_ID: Optional[str] = None
+    WHATSAPP_BUSINESS_ACCOUNT_ID: Optional[str] = None
+    WHATSAPP_TEMPLATE_NAME: str = Field(default="smart_guardian_early_warning")
+    WHATSAPP_TEMPLATE_LANGUAGE: str = Field(default="en_US")
+    WHATSAPP_RECIPIENTS: List[str] = Field(default_factory=list)
+    WHATSAPP_TIMEOUT_SECONDS: float = Field(default=10.0)
+    WHATSAPP_MAX_RETRIES: int = Field(default=3)
+
+    @field_validator("EMAIL_RECIPIENTS", "WHATSAPP_RECIPIENTS", mode="before")
+    @classmethod
+    def assemble_recipients(cls, v: Union[str, List[str], None]) -> List[str]:
+        if v is None:
+            return []
+        if isinstance(v, str):
+            if v.startswith("[") and v.endswith("]"):
+                import json
+                try:
+                    return json.loads(v)
+                except Exception:
+                    pass
+            return [i.strip() for i in v.split(",") if i.strip()]
+        return v
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

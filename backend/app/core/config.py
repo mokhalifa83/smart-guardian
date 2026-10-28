@@ -59,17 +59,17 @@ class Settings(BaseSettings):
     EMAIL_SMTP_HOST: Optional[str] = None
     EMAIL_SMTP_PORT: int = Field(default=587)
     EMAIL_SENDER: str = Field(default="alerts@smart-guardian.oil")
-    EMAIL_RECIPIENTS: List[str] = Field(default_factory=lambda: ["engineering-control-room@operator.com"])
+    EMAIL_RECIPIENTS: Union[List[str], str] = Field(default_factory=lambda: ["engineering-control-room@operator.com"])
 
     # WhatsApp Notification Settings (Prompt 5)
     WHATSAPP_NOTIFICATION_MODE: str = Field(default="LOG_ONLY")  # LOG_ONLY, ACTIVE
-    WHATSAPP_API_BASE_URL: str = Field(default="https://graph.facebook.com/v19.0")
+    WHATSAPP_API_BASE_URL: str = Field(default="https://graph.facebook.com/v21.0")
     WHATSAPP_API_TOKEN: Optional[str] = None
     WHATSAPP_PHONE_NUMBER_ID: Optional[str] = None
     WHATSAPP_BUSINESS_ACCOUNT_ID: Optional[str] = None
     WHATSAPP_TEMPLATE_NAME: str = Field(default="smart_guardian_early_warning")
     WHATSAPP_TEMPLATE_LANGUAGE: str = Field(default="en_US")
-    WHATSAPP_RECIPIENTS: List[str] = Field(default_factory=list)
+    WHATSAPP_RECIPIENTS: Union[List[str], str] = Field(default_factory=list)
     WHATSAPP_TIMEOUT_SECONDS: float = Field(default=10.0)
     WHATSAPP_MAX_RETRIES: int = Field(default=3)
 

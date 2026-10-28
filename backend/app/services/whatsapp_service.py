@@ -15,6 +15,7 @@ Architecture Rules:
 """
 
 import asyncio
+import re
 from datetime import datetime, timezone
 from typing import Optional, List, Dict, Any
 import httpx
@@ -131,11 +132,14 @@ class WhatsAppNotificationService:
             "Content-Type": "application/json"
         }
 
+        # Sanitize recipient phone number to digits only (e.g. +46-73-557-02-41 -> 46735570241)
+        clean_recipient = re.sub(r"\D", "", target_recipient)
+
         # Build payload: Text message format (or template format if configured)
         payload = {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
-            "to": target_recipient.lstrip("+"),
+            "to": clean_recipient,
             "type": "text",
             "text": {
                 "preview_url": False,

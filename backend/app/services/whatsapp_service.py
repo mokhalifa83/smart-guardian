@@ -135,17 +135,31 @@ class WhatsAppNotificationService:
         # Sanitize recipient phone number to digits only (e.g. +46-73-557-02-41 -> 46735570241)
         clean_recipient = re.sub(r"\D", "", target_recipient)
 
-        # Build payload: Text message format (or template format if configured)
-        payload = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": clean_recipient,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": message_body
+        # Build payload: Use hello_world template (works anytime, no 24h window needed)
+        # Template sends a fixed greeting; the full alert body is appended as a separate text message
+        use_template = settings.WHATSAPP_TEMPLATE_NAME and settings.WHATSAPP_TEMPLATE_NAME != ""
+        if use_template:
+            payload = {
+                "messaging_product": "whatsapp",
+                "recipient_type": "individual",
+                "to": clean_recipient,
+                "type": "template",
+                "template": {
+                    "name": settings.WHATSAPP_TEMPLATE_NAME,
+                    "language": {"code": settings.WHATSAPP_TEMPLATE_LANGUAGE}
+                }
             }
-        }
+        else:
+            payload = {
+                "messaging_product": "whatsapp",
+                "recipient_type": "individual",
+                "to": clean_recipient,
+                "type": "text",
+                "text": {
+                    "preview_url": False,
+                    "body": message_body
+                }
+            }
 
         timeout = httpx.Timeout(settings.WHATSAPP_TIMEOUT_SECONDS)
         max_retries = max(1, settings.WHATSAPP_MAX_RETRIES)
@@ -161,6 +175,24 @@ class WhatsAppNotificationService:
                         resp_json = response.json() if response.content else {}
                         messages_arr = resp_json.get("messages", [])
                         provider_msg_id = messages_arr[0].get("id") if messages_arr else None
+
+                        # If template was sent, follow up with the full alert details as text
+                        if use_template:
+                            await asyncio.sleep(0.5)
+                            text_payload = {
+                                "messaging_product": "whatsapp",
+                                "recipient_type": "individual",
+                                "to": clean_recipient,
+                                "type": "text",
+                                "text": {
+                                    "preview_url": False,
+                                    "body": message_body
+                                }
+                            }
+                            try:
+                                await client.post(endpoint, json=text_payload, headers=headers)
+                            except Exception:
+                                pass  # Alert detail text is best-effort; don't fail the main notification
 
                         logger.info(
                             f"WHATSAPP_NOTIFICATION_SENT: Well {notification_context.well_code} to {target_recipient}",

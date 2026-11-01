@@ -133,6 +133,15 @@ class NotificationDispatcher:
         # Channel 2: WhatsApp Notification (Prompt 5) - Supports Multiple Recipients
         # -------------------------------------------------------------
         whatsapp_recipients = settings.WHATSAPP_RECIPIENTS or ["+10000000000"]
+        logger.info(
+            f"WHATSAPP_DISPATCH: Sending to {len(whatsapp_recipients)} recipient(s): {whatsapp_recipients}",
+            extra={"structured_data": {
+                "event": "WHATSAPP_DISPATCH_RECIPIENTS",
+                "well_code": alert.well_code,
+                "recipients": whatsapp_recipients,
+                "count": len(whatsapp_recipients)
+            }}
+        )
         whatsapp_delivery_results = []
         for rec in whatsapp_recipients:
             try:

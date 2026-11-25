@@ -112,21 +112,28 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
               </p>
             </div>
           ) : (
-            <div className="flex items-baseline gap-2">
-              <span
-                className={`text-3xl lg:text-4xl font-extrabold font-mono tracking-tight ${
-                  kpi.status === "WARNING" ? "text-amber-400" : "text-white"
-                }`}
-              >
-                {kpi.display_value}
-              </span>
-              <span className="text-sm font-semibold text-slate-400 font-mono">
-                {kpi.unit}
-              </span>
-              {kpi.is_threshold_exceeded && (
-                <span className="text-xs font-medium text-amber-400 border border-amber-500/50 bg-amber-950/60 px-2 py-0.5 rounded">
+            <div className="flex items-center justify-between">
+              <div className="flex items-baseline gap-2">
+                <span
+                  className={`text-3xl lg:text-4xl font-extrabold font-mono tracking-tight ${
+                    kpi.status === "WARNING" ? "text-amber-400" : "text-white"
+                  }`}
+                >
+                  {kpi.display_value}
+                </span>
+                <span className="text-sm font-semibold text-slate-400 font-mono">
+                  {kpi.unit}
+                </span>
+              </div>
+              {kpi.is_threshold_exceeded ? (
+                <span className="text-xs font-semibold text-amber-400 border border-amber-500/50 bg-amber-950/60 px-2 py-0.5 rounded">
                   {t("kpi.warning_exceeded")}
                 </span>
+              ) : (
+                <div className="flex items-center gap-1.5 text-xs text-emerald-400/90 font-mono bg-emerald-950/30 px-2 py-0.5 rounded-md border border-emerald-800/40">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  <span>Stable</span>
+                </div>
               )}
             </div>
           )}

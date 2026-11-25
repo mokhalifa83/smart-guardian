@@ -64,14 +64,14 @@ export function Dashboard() {
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6 space-y-6">
-        {/* Well Surveillance Summary Banner */}
-        <div className="rounded-2xl border border-cyan-500/20 bg-[#0c1527] p-6 shadow-2xl shadow-cyan-950/20 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        {/* Well Surveillance Summary Banner with Integrated Condition */}
+        <div className="rounded-2xl border border-oilfield-700/80 bg-[#0c1527] p-5 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2.5">
               <h2 className="text-2xl font-black tracking-tight text-white font-mono">
                 {dashboard?.well_code || selectedWellCode}
               </h2>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cyan-950 text-cyan-300 border border-cyan-800">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-800 text-cyan-300 border border-slate-700">
                 {selectedWell?.field_name || dashboard?.field_name || "Field Reservoir"}
               </span>
               <span
@@ -83,6 +83,37 @@ export function Dashboard() {
               >
                 {selectedWell?.status || dashboard?.well_status || "ACTIVE"}
               </span>
+
+              {/* Integrated Compact Surveillance Condition Badge */}
+              {dashboard && (
+                <div
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold border transition ${
+                    dashboard.surveillance_state === "WARNING"
+                      ? "bg-amber-950/60 border-amber-500/60 text-amber-300"
+                      : dashboard.surveillance_state === "NORMAL"
+                      ? "bg-emerald-950/60 border-emerald-500/60 text-emerald-300"
+                      : "bg-slate-900 border-slate-700 text-slate-300"
+                  }`}
+                  title={
+                    dashboard.surveillance_state === "WARNING"
+                      ? t("dashboard.surveillance_warning_desc")
+                      : dashboard.surveillance_state === "NORMAL"
+                      ? t("dashboard.surveillance_normal_desc")
+                      : t("dashboard.surveillance_unavailable_desc")
+                  }
+                >
+                  {dashboard.surveillance_state === "WARNING" ? (
+                    <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  ) : dashboard.surveillance_state === "NORMAL" ? (
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  ) : (
+                    <HelpCircle className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                  )}
+                  <span>
+                    {t("dashboard.surveillance_condition")}: {t(`status.${dashboard.surveillance_state}`) || dashboard.surveillance_state}
+                  </span>
+                </div>
+              )}
             </div>
             <p className="text-xs text-slate-400 mt-1.5 font-medium">
               {t("dashboard.subtitle")}
@@ -90,7 +121,7 @@ export function Dashboard() {
           </div>
 
           {/* Quick Metrics & Actions */}
-          <div className="flex flex-wrap items-center gap-3 text-xs">
+          <div className="flex flex-wrap items-center gap-2.5 text-xs">
             <div className="bg-[#080e1b] border border-oilfield-700/80 px-3.5 py-2 rounded-xl">
               <span className="text-slate-400 block text-[11px] font-semibold">{t("dashboard.configured_threshold")}:</span>
               <span className="text-sm font-bold font-mono text-amber-400">
@@ -158,40 +189,16 @@ export function Dashboard() {
         {/* ========================================================= */}
         {dashboardView === "surveillance" && (
           <div className="space-y-6">
-            {/* Global Surveillance State Banner */}
-            {dashboard && (
-              <div
-                className={`rounded-xl border p-4 flex items-center justify-between transition-all ${
-                  dashboard.surveillance_state === "WARNING"
-                    ? "bg-amber-950/40 border-amber-500/40 text-amber-200"
-                    : dashboard.surveillance_state === "NORMAL"
-                    ? "bg-emerald-950/40 border-emerald-500/40 text-emerald-200"
-                    : "bg-slate-900/80 border-slate-700 text-slate-300"
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  {dashboard.surveillance_state === "WARNING" ? (
-                    <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
-                  ) : dashboard.surveillance_state === "NORMAL" ? (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
-                  ) : (
-                    <HelpCircle className="w-5 h-5 text-slate-400 shrink-0" />
-                  )}
-                  <div>
-                    <span className="text-xs font-bold uppercase tracking-wider">
-                      {t("dashboard.surveillance_condition")}: {t(`status.${dashboard.surveillance_state}`) || dashboard.surveillance_state}
-                    </span>
-                    <p className="text-xs text-slate-300 mt-0.5">
-                      {dashboard.surveillance_state === "WARNING"
-                        ? t("dashboard.surveillance_warning_desc")
-                        : dashboard.surveillance_state === "NORMAL"
-                        ? t("dashboard.surveillance_normal_desc")
-                        : t("dashboard.surveillance_unavailable_desc")}
-                    </p>
-                  </div>
+            {/* Operational Warning Notification Strip (Only shown when WARNING) */}
+            {dashboard && dashboard.surveillance_state === "WARNING" && (
+              <div className="rounded-xl border border-amber-500/40 bg-amber-950/30 p-3.5 flex items-center justify-between text-amber-200">
+                <div className="flex items-center gap-2.5">
+                  <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span className="text-xs font-medium">
+                    {t("dashboard.surveillance_warning_desc")}
+                  </span>
                 </div>
-
-                <span className="text-[11px] font-mono font-bold px-2.5 py-1 rounded-lg bg-black/40 border border-white/10">
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-900/60 text-amber-300 border border-amber-600/60">
                   {dashboard.surveillance_state}
                 </span>
               </div>
@@ -280,34 +287,44 @@ export function Dashboard() {
         </div>
       </main>
 
-      {/* Modals */}
-      <ManualReadingModal
-        isOpen={isManualModalOpen}
-        onClose={() => setIsManualModalOpen(false)}
-        wellCode={selectedWellCode}
-      />
+      {/* Modals with lazy conditional mount */}
+      {isManualModalOpen && (
+        <ManualReadingModal
+          isOpen={isManualModalOpen}
+          onClose={() => setIsManualModalOpen(false)}
+          wellCode={selectedWellCode}
+        />
+      )}
 
-      <SeparatorReadingModal
-        isOpen={isSeparatorModalOpen}
-        onClose={() => setIsSeparatorModalOpen(false)}
-        wellCode={selectedWellCode}
-      />
+      {isSeparatorModalOpen && (
+        <SeparatorReadingModal
+          isOpen={isSeparatorModalOpen}
+          onClose={() => setIsSeparatorModalOpen(false)}
+          wellCode={selectedWellCode}
+        />
+      )}
 
-      <WellConfigModal
-        isOpen={isConfigModalOpen}
-        onClose={() => setIsConfigModalOpen(false)}
-        wellCode={selectedWellCode}
-      />
+      {isConfigModalOpen && (
+        <WellConfigModal
+          isOpen={isConfigModalOpen}
+          onClose={() => setIsConfigModalOpen(false)}
+          wellCode={selectedWellCode}
+        />
+      )}
 
-      <WellManagementModal
-        isOpen={isWellManagementOpen}
-        onClose={() => setIsWellManagementOpen(false)}
-      />
+      {isWellManagementOpen && (
+        <WellManagementModal
+          isOpen={isWellManagementOpen}
+          onClose={() => setIsWellManagementOpen(false)}
+        />
+      )}
 
-      <SupervisoryModeModal
-        isOpen={isSupervisoryModalOpen}
-        onClose={() => setIsSupervisoryModalOpen(false)}
-      />
+      {isSupervisoryModalOpen && (
+        <SupervisoryModeModal
+          isOpen={isSupervisoryModalOpen}
+          onClose={() => setIsSupervisoryModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

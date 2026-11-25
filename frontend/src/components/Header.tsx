@@ -13,7 +13,7 @@ import {
   Database,
   Sliders,
   Layers,
-  Plus,
+  ChevronDown,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -35,6 +35,7 @@ export function Header({
   const { wells, selectedWellCode, setSelectedWellCode } = useWell();
 
   const [isSupervisoryActive, setIsSupervisoryActive] = useState(false);
+  const [isOperationsOpen, setIsOperationsOpen] = useState(false);
 
   useEffect(() => {
     fetchFieldControlMode()
@@ -138,30 +139,75 @@ export function Header({
             <span>{t("header.manage_wells_btn", { count: wells.length })}</span>
           </button>
 
-          {/* Action Modals */}
-          <button
-            onClick={onOpenManualModal}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-xl bg-[#0f1b2f] hover:bg-[#15243f] text-slate-200 border border-oilfield-600 transition"
-          >
-            <Database className="w-3.5 h-3.5 text-emerald-400" />
-            <span>{t("dashboard.ingest_manual")}</span>
-          </button>
+          {/* Field Operations Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setIsOperationsOpen(!isOperationsOpen)}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#0f1b2f] hover:bg-[#15243f] text-slate-200 border border-oilfield-600 transition"
+              aria-expanded={isOperationsOpen}
+            >
+              <Database className="w-3.5 h-3.5 text-emerald-400" />
+              <span>{t("header.operations_menu")}</span>
+              <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${isOperationsOpen ? "rotate-180" : ""}`} />
+            </button>
 
-          <button
-            onClick={onOpenSeparatorModal}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-xl bg-[#0f1b2f] hover:bg-[#15243f] text-slate-200 border border-oilfield-600 transition"
-          >
-            <Activity className="w-3.5 h-3.5 text-cyan-400" />
-            <span>{t("dashboard.ingest_separator")}</span>
-          </button>
+            {isOperationsOpen && (
+              <>
+                <div
+                  className="fixed inset-0 z-40"
+                  onClick={() => setIsOperationsOpen(false)}
+                />
+                <div className="absolute right-0 rtl:right-auto rtl:left-0 mt-2 w-64 bg-[#0c1527] border border-oilfield-600 rounded-xl shadow-2xl z-50 py-1 divide-y divide-oilfield-700/60 animate-in fade-in zoom-in-95 duration-100">
+                  <div className="px-3 py-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                    {t("header.operations_menu")}
+                  </div>
+                  <div className="py-1">
+                    <button
+                      onClick={() => {
+                        setIsOperationsOpen(false);
+                        onOpenManualModal();
+                      }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-slate-200 hover:bg-[#16243d] hover:text-white transition text-start"
+                    >
+                      <Database className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <div>
+                        <div className="font-semibold">{t("dashboard.ingest_manual")}</div>
+                        <div className="text-[10px] text-slate-400">Shake-out water cut & wellhead gauge</div>
+                      </div>
+                    </button>
 
-          <button
-            onClick={onOpenConfigModal}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-xl bg-[#0f1b2f] hover:bg-[#15243f] text-slate-200 border border-oilfield-600 transition"
-          >
-            <Sliders className="w-3.5 h-3.5 text-amber-400" />
-            <span>{t("dashboard.configure_well")}</span>
-          </button>
+                    <button
+                      onClick={() => {
+                        setIsOperationsOpen(false);
+                        onOpenSeparatorModal();
+                      }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-slate-200 hover:bg-[#16243d] hover:text-white transition text-start"
+                    >
+                      <Activity className="w-4 h-4 text-cyan-400 shrink-0" />
+                      <div>
+                        <div className="font-semibold">{t("dashboard.ingest_separator")}</div>
+                        <div className="text-[10px] text-slate-400">Multi-phase separator test telemetry</div>
+                      </div>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setIsOperationsOpen(false);
+                        onOpenConfigModal();
+                      }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-slate-200 hover:bg-[#16243d] hover:text-white transition text-start"
+                    >
+                      <Sliders className="w-4 h-4 text-amber-400 shrink-0" />
+                      <div>
+                        <div className="font-semibold">{t("dashboard.configure_well")}</div>
+                        <div className="text-[10px] text-slate-400">Alarm thresholds & cooldown limits</div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
 
           {/* Language Toggle */}
           <button

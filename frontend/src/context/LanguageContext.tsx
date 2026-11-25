@@ -12,7 +12,7 @@ interface LanguageContextType {
   direction: Direction;
   setLanguage: (lang: Language) => void;
   toggleLanguage: () => void;
-  t: (keyPath: string) => string;
+  t: (keyPath: string, params?: Record<string, string | number>) => string;
 }
 
 const translations: Record<Language, any> = {
@@ -40,9 +40,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     setLanguageState((prev) => (prev === "en" ? "ar" : "en"));
   };
 
-  const t = (keyPath: string): string => {
+  const t = (keyPath: string, params?: Record<string, string | number>): string => {
     const keys = keyPath.split(".");
     let current: any = translations[language];
+    let resultStr = keyPath;
+
     for (const key of keys) {
       if (current && typeof current === "object" && key in current) {
         current = current[key];
@@ -56,10 +58,23 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             return keyPath;
           }
         }
-        return typeof fallback === "string" ? fallback : keyPath;
+        resultStr = typeof fallback === "string" ? fallback : keyPath;
+        current = null;
+        break;
       }
     }
-    return typeof current === "string" ? current : keyPath;
+
+    if (current && typeof current === "string") {
+      resultStr = current;
+    }
+
+    if (params && typeof resultStr === "string") {
+      Object.entries(params).forEach(([pKey, pVal]) => {
+        resultStr = resultStr.replace(new RegExp(`\\{${pKey}\\}`, "g"), String(pVal));
+      });
+    }
+
+    return resultStr;
   };
 
   return (

@@ -135,10 +135,13 @@ class WhatsAppNotificationService:
         # Sanitize recipient phone number to digits only (e.g. +46-73-557-02-41 -> 46735570241)
         clean_recipient = re.sub(r"\D", "", target_recipient)
 
-        # Build payload: Use hello_world template (works anytime, no 24h window needed)
-        # Template sends a fixed greeting; the full alert body is appended as a separate text message
-        use_template = settings.WHATSAPP_TEMPLATE_NAME and settings.WHATSAPP_TEMPLATE_NAME != ""
+        # Build payload: Use smart_guardian_alert template with dynamic parameters.
+        # Falls back to free-form text if no template name is configured.
+        use_template = bool(settings.WHATSAPP_TEMPLATE_NAME)
         if use_template:
+            wc_str = f"{notification_context.water_cut:.1f}" if notification_context.water_cut is not None else "N/A"
+            thresh_str = f"{notification_context.threshold:.1f}" if notification_context.threshold is not None else "N/A"
+            ts_str = notification_context.timestamp.strftime("%Y-%m-%d %H:%M UTC")
             payload = {
                 "messaging_product": "whatsapp",
                 "recipient_type": "individual",
@@ -146,7 +149,19 @@ class WhatsAppNotificationService:
                 "type": "template",
                 "template": {
                     "name": settings.WHATSAPP_TEMPLATE_NAME,
-                    "language": {"code": settings.WHATSAPP_TEMPLATE_LANGUAGE}
+                    "language": {"code": settings.WHATSAPP_TEMPLATE_LANGUAGE},
+                    "components": [
+                        {
+                            "type": "body",
+                            "parameters": [
+                                {"type": "text", "text": notification_context.well_code},
+                                {"type": "text", "text": wc_str},
+                                {"type": "text", "text": thresh_str},
+                                {"type": "text", "text": notification_context.severity},
+                                {"type": "text", "text": ts_str},
+                            ]
+                        }
+                    ]
                 }
             }
         else:

@@ -77,13 +77,13 @@ export function ReservoirEnginesHub() {
 
   // Categories list
   const categories = [
-    { id: "ALL", label: "جميع المحركات (36)" },
-    { id: "Virtual Sensing", label: "الاستشعار الافتراضي والخوانق" },
-    { id: "Surveillance", label: "المراقبة والإنتاج" },
-    { id: "Reservoir Engineering", label: "فيزياء المكمن وتوازن المواد" },
-    { id: "Artificial Lift", label: "المضخات والرفع الاصطناعي" },
-    { id: "AI", label: "الذكاء الاصطناعي المقيد بالفيزياء (PIAI)" },
-    { id: "Economics", label: "الاقتصاديات النفطية والتكاليف" },
+    { id: "ALL", label: t("engines.categories.ALL") },
+    { id: "Virtual Sensing", label: t("engines.categories.Virtual Sensing") },
+    { id: "Surveillance", label: t("engines.categories.Surveillance") },
+    { id: "Reservoir Engineering", label: t("engines.categories.Reservoir Engineering") },
+    { id: "Artificial Lift", label: t("engines.categories.Artificial Lift") },
+    { id: "AI", label: t("engines.categories.AI") },
+    { id: "Economics", label: t("engines.categories.Economics") },
   ];
 
   // Execute Chan Diagnostics
@@ -219,13 +219,13 @@ export function ReservoirEnginesHub() {
               </div>
               <div>
                 <h3 className="text-xl font-black text-white flex items-center gap-2">
-                  <span>Reservoir Intelligence & 36 Physics Engines</span>
+                  <span>{t("engines.title")}</span>
                   <span className="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-indigo-950 text-indigo-300 border border-indigo-800">
-                    SPE-PRMS Standard
+                    {t("engines.spe_standard")}
                   </span>
                 </h3>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  جميع المحركات الهندسية والتشخيصية الـ 36 تعمل بالمعادلات المحكّمة من جمعية مهندسي البترول (SPE) وبقيود الفيزياء الصارمة.
+                  {t("engines.subtitle")}
                 </p>
               </div>
             </div>
@@ -235,15 +235,15 @@ export function ReservoirEnginesHub() {
             <div className="bg-[#080e1b] border border-oilfield-700/80 px-4 py-2 rounded-xl flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
               <div>
-                <span className="text-slate-400 block text-[10px] font-semibold">حالة المحركات:</span>
-                <span className="text-emerald-400 font-mono font-bold">36/36 Active & Verified</span>
+                <span className="text-slate-400 block text-[10px] font-semibold">{t("engines.status_label")}</span>
+                <span className="text-emerald-400 font-mono font-bold">{t("engines.status_verified")}</span>
               </div>
             </div>
 
             <div className="bg-[#080e1b] border border-oilfield-700/80 px-4 py-2 rounded-xl flex items-center gap-2">
               <Activity className="w-4 h-4 text-cyan-400" />
               <div>
-                <span className="text-slate-400 block text-[10px] font-semibold">البئر النشط للتحليل:</span>
+                <span className="text-slate-400 block text-[10px] font-semibold">{t("engines.active_well_label")}</span>
                 <span className="text-cyan-300 font-mono font-bold">{selectedWellCode}</span>
               </div>
             </div>
@@ -256,12 +256,12 @@ export function ReservoirEnginesHub() {
             onClick={() => setActiveTab("catalog")}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
               activeTab === "catalog"
-                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30"
+                ? "bg-indigo-600 text-white shadow-sm"
                 : "bg-[#0f172a] text-slate-300 hover:bg-[#18233c] border border-slate-700/60"
             }`}
           >
             <Layers className="w-4 h-4" />
-            <span>كتالوج المحركات الـ 36 (Master Catalog)</span>
+            <span>{t("engines.tabs.catalog")}</span>
           </button>
 
           <button
@@ -271,12 +271,12 @@ export function ReservoirEnginesHub() {
             }}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
               activeTab === "chan"
-                ? "bg-cyan-600 text-white shadow-lg shadow-cyan-600/30"
+                ? "bg-cyan-600 text-white shadow-sm"
                 : "bg-[#0f172a] text-slate-300 hover:bg-[#18233c] border border-slate-700/60"
             }`}
           >
             <Activity className="w-4 h-4" />
-            <span>منحنى تشان لتشخيص المياه (Chan Diagnostic)</span>
+            <span>{t("engines.tabs.chan")}</span>
           </button>
 
           <button
@@ -286,12 +286,12 @@ export function ReservoirEnginesHub() {
             }}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
               activeTab === "vogel"
-                ? "bg-emerald-600 text-white shadow-lg shadow-emerald-600/30"
+                ? "bg-emerald-600 text-white shadow-sm"
                 : "bg-[#0f172a] text-slate-300 hover:bg-[#18233c] border border-slate-700/60"
             }`}
           >
             <Gauge className="w-4 h-4" />
-            <span>منحنى أداء تدفق المكمن (Vogel IPR Curve)</span>
+            <span>{t("engines.tabs.vogel")}</span>
           </button>
 
           <button
@@ -301,12 +301,12 @@ export function ReservoirEnginesHub() {
             }}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
               activeTab === "vfm"
-                ? "bg-amber-600 text-white shadow-lg shadow-amber-600/30"
+                ? "bg-amber-600 text-white shadow-sm"
                 : "bg-[#0f172a] text-slate-300 hover:bg-[#18233c] border border-slate-700/60"
             }`}
           >
             <Activity className="w-4 h-4" />
-            <span>القياس الافتراضي للخوانق (VFM Choke Engine)</span>
+            <span>{t("engines.tabs.vfm")}</span>
           </button>
 
           <button
@@ -316,12 +316,12 @@ export function ReservoirEnginesHub() {
             }}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
               activeTab === "mbe"
-                ? "bg-purple-600 text-white shadow-lg shadow-purple-600/30"
+                ? "bg-purple-600 text-white shadow-sm"
                 : "bg-[#0f172a] text-slate-300 hover:bg-[#18233c] border border-slate-700/60"
             }`}
           >
             <Scale className="w-4 h-4" />
-            <span>ميزان المواد ودوافع المكمن (Havlena-Odeh MBE)</span>
+            <span>{t("engines.tabs.mbe")}</span>
           </button>
 
           <button
@@ -331,12 +331,12 @@ export function ReservoirEnginesHub() {
             }}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
               activeTab === "dca"
-                ? "bg-rose-600 text-white shadow-lg shadow-rose-600/30"
+                ? "bg-rose-600 text-white shadow-sm"
                 : "bg-[#0f172a] text-slate-300 hover:bg-[#18233c] border border-slate-700/60"
             }`}
           >
             <TrendingDown className="w-4 h-4" />
-            <span>انحدار الإنتاج والاحتياطي (Arps DCA Engine)</span>
+            <span>{t("engines.tabs.dca")}</span>
           </button>
         </div>
       </div>

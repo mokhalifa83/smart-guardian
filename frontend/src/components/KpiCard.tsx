@@ -134,12 +134,12 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
       </div>
 
       {/* Provenance & Audit Metadata Grid */}
-      <div className="border-t border-oilfield-700/60 pt-3 mt-2 grid grid-cols-2 gap-2 text-[11px] text-slate-400">
+      <div className="border-t border-oilfield-700/60 pt-3 mt-2 grid grid-cols-2 gap-2 text-xs text-slate-300">
         <div className="flex items-center gap-1.5 truncate">
           <Database className="w-3.5 h-3.5 text-slate-400 shrink-0" />
           <span className="truncate">
             <span className="text-slate-400">{t("kpi.source")}: </span>
-            <span className="text-slate-300 font-medium font-mono">
+            <span className="text-slate-200 font-medium font-mono">
               {kpi.source || "--"}
             </span>
           </span>
@@ -167,7 +167,7 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
           <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
           <span className="truncate text-slate-400">
             {t("kpi.measured_at")}:{" "}
-            <span className="text-slate-300 font-mono">
+            <span className="text-slate-200 font-mono">
               {formatDateTime(kpi.timestamp)}
             </span>
           </span>

@@ -1,7 +1,7 @@
 {
   "app_name": "SMART GUARDIAN",
   "app_tagline": "Digital Oilfield & Reservoir Intelligence Platform",
-  "phase_notice": "Phase 1: Foundation & Basic Surveillance (Read-Only)",
+  "phase_notice": "Digital Oilfield & Reservoir Intelligence Layer (SPE-PRMS Standard)",
   "read_only_badge": "READ-ONLY INDUSTRIAL BOUNDARY",
   "nav": {
     "dashboard": "Surveillance Dashboard",
@@ -9,6 +9,14 @@
     "alerts": "Alert Management",
     "ingestion": "Data Ingestion",
     "configuration": "Well Config"
+  },
+  "header": {
+    "supervisory_write_mode": "SUPERVISORY WRITE MODE (FULL FUNCTION)",
+    "read_only_boundary": "READ-ONLY SURVEILLANCE BOUNDARY",
+    "telemetry_live": "TELEMETRY LIVE",
+    "manage_wells_btn": "Manage Wells ({count})",
+    "operations_menu": "Field Operations",
+    "lang_toggle": "العربية"
   },
   "dashboard": {
     "title": "Real-Time Production Surveillance",
@@ -18,6 +26,7 @@
     "status": "Well Status",
     "latest_ts": "Latest Telemetry",
     "surveillance_state": "Surveillance State",
+    "active_alerts": "Operational Alerts",
     "active_alerts_count": "Active Alerts",
     "configured_threshold": "WC Alarm Threshold",
     "refresh_interval": "Refresh",
@@ -26,7 +35,21 @@
     "actions": "Actions",
     "ingest_manual": "Manual Entry",
     "ingest_separator": "Separator Telemetry",
-    "configure_well": "Configure Thresholds"
+    "configure_well": "Configure Thresholds",
+    "view_surveillance": "Real-Time Field Surveillance & Alerts",
+    "view_engines": "Reservoir Physics & Intelligence (36 Engines)",
+    "surveillance_condition": "Surveillance Condition",
+    "surveillance_normal_desc": "Wellhead telemetry operating within validated engineering envelope.",
+    "surveillance_warning_desc": "Production threshold exceedance detected on monitored asset. Operational review required.",
+    "surveillance_unavailable_desc": "Telemetry data is currently unavailable. Waiting for sensor stream.",
+    "streaming_telemetry": "Streaming surveillance telemetry...",
+    "backend_error": "Failed to connect to backend surveillance engine",
+    "realtime_metrics_title": "Real-Time Surveillance Metrics",
+    "realtime_metrics_subtitle": "Distinguishes Measured vs Calculated vs Derived",
+    "active_alerts_subtitle": "Structured Lifecycle (ACTIVE → ACKNOWLEDGED → RESOLVED)",
+    "active_well": "Active Well",
+    "data_integrity_title": "Data Integrity Principle",
+    "engine_version": "SMART GUARDIAN ENGINE v2.0"
   },
   "kpi": {
     "water_cut": "Water Cut",
@@ -47,6 +70,8 @@
     "DATA_UNAVAILABLE": "DATA_UNAVAILABLE",
     "ACTIVE": "Active",
     "SHUT_IN": "Shut-In",
+    "SUSPENDED": "Suspended",
+    "DRILLING": "Drilling",
     "VALID": "Validated",
     "INVALID": "Invalid",
     "STALE": "Stale",
@@ -68,6 +93,31 @@
     "acknowledged": "Acknowledged",
     "resolved": "Resolved",
     "root_cause_disclaimer": "Surveillance Warning (Phase 1). Multi-evidence diagnostic engines (Chan, MatBal) reserved for Phase 2."
+  },
+  "engines": {
+    "title": "Reservoir Intelligence & 36 Physics Engines",
+    "spe_standard": "SPE-PRMS Standard",
+    "subtitle": "All 36 petroleum and diagnostic physics engines operate under strict SPE peer-reviewed equations and thermodynamic guardrails.",
+    "status_label": "Engines Status:",
+    "status_verified": "36/36 Active & Verified",
+    "active_well_label": "Active Well for Diagnostics:",
+    "tabs": {
+      "catalog": "Master Catalog (36)",
+      "chan": "Chan Diagnostic Plot",
+      "vogel": "Vogel IPR Curve",
+      "vfm": "VFM Choke Engine",
+      "mbe": "Havlena-Odeh MBE",
+      "dca": "Arps DCA Decline Engine"
+    },
+    "categories": {
+      "ALL": "All Engines (36)",
+      "Virtual Sensing": "Virtual Sensing & Chokes",
+      "Surveillance": "Surveillance & Production",
+      "Reservoir Engineering": "Reservoir Physics & Material Balance",
+      "Artificial Lift": "Artificial Lift & ESP",
+      "AI": "Physics-Informed AI (PIAI)",
+      "Economics": "Petroleum Economics & Net Present Value"
+    }
   },
   "modal": {
     "manual_title": "Manual Field Data Entry",

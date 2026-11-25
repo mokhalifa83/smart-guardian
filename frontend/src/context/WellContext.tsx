@@ -37,22 +37,21 @@ export function WellProvider({ children }: { children: React.ReactNode }) {
       const data = await fetchWells();
       setWells(data);
       if (data.length > 0) {
-        // If current selection is invalid or not in list, pick first
-        const exists = data.some((w) => w.well_code === selectedWellCode);
-        if (!exists) {
-          setSelectedWellCode(data[0].well_code);
-        }
+        setSelectedWellCode((current) => {
+          const exists = data.some((w) => w.well_code === current);
+          return exists ? current : data[0].well_code;
+        });
       }
     } catch (err) {
       console.error("Failed to load wells:", err);
     } finally {
       setIsLoading(false);
     }
-  }, [selectedWellCode]);
+  }, []);
 
   useEffect(() => {
     refreshWells();
-  }, []);
+  }, [refreshWells]);
 
   const addWell = async (payload: {
     well_code: string;
@@ -77,12 +76,16 @@ export function WellProvider({ children }: { children: React.ReactNode }) {
 
   const removeWell = async (wellCode: string) => {
     await deleteWell(wellCode);
-    const remaining = wells.filter((w) => w.well_code !== wellCode);
-    setWells(remaining);
-    if (selectedWellCode === wellCode && remaining.length > 0) {
-      setSelectedWellCode(remaining[0].well_code);
+    const data = await fetchWells();
+    setWells(data);
+    if (data.length > 0) {
+      setSelectedWellCode((curr) => {
+        if (curr === wellCode) {
+          return data[0].well_code;
+        }
+        return curr;
+      });
     }
-    await refreshWells();
   };
 
   const selectedWell = wells.find((w) => w.well_code === selectedWellCode);

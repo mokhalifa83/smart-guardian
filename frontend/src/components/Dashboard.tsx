@@ -77,8 +77,8 @@ export function Dashboard() {
               <span
                 className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
                   (selectedWell?.status || dashboard?.well_status) === "ACTIVE"
-                    ? "bg-emerald-950 text-emerald-400 border border-emerald-800 animate-pulse"
-                    : "bg-amber-950 text-amber-400 border border-amber-800"
+                    ? "bg-emerald-950/80 text-emerald-400 border border-emerald-800"
+                    : "bg-amber-950/80 text-amber-400 border border-amber-800"
                 }`}
               >
                 {selectedWell?.status || dashboard?.well_status || "ACTIVE"}
@@ -124,24 +124,24 @@ export function Dashboard() {
               onClick={() => setDashboardView("surveillance")}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
                 dashboardView === "surveillance"
-                  ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-600/30"
+                  ? "bg-cyan-600 text-white shadow-sm"
                   : "text-slate-400 hover:text-slate-200 hover:bg-[#0f172a]"
               }`}
             >
               <Activity className="w-4 h-4" />
-              <span>المراقبة الحقلية المباشرة والإنذار المبكر (Field Surveillance & Alerts)</span>
+              <span>{t("dashboard.view_surveillance")}</span>
             </button>
 
             <button
               onClick={() => setDashboardView("engines")}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
                 dashboardView === "engines"
-                  ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-600/30"
+                  ? "bg-indigo-600 text-white shadow-sm"
                   : "text-slate-400 hover:text-slate-200 hover:bg-[#0f172a]"
               }`}
             >
               <Cpu className="w-4 h-4" />
-              <span>محركات المكمن والذكاء الهندسي (36 Physics Engines Hub)</span>
+              <span>{t("dashboard.view_engines")}</span>
               <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-950 text-indigo-300 border border-indigo-700">
                 36
               </span>
@@ -149,7 +149,7 @@ export function Dashboard() {
           </div>
 
           <div className="text-[11px] text-slate-400 font-mono hidden md:block px-3">
-            Active Well: <span className="text-cyan-300 font-bold">{selectedWellCode}</span>
+            {t("dashboard.active_well")}: <span className="text-cyan-300 font-bold">{selectedWellCode}</span>
           </div>
         </div>
 
@@ -179,14 +179,14 @@ export function Dashboard() {
                   )}
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider">
-                      Surveillance Condition: {dashboard.surveillance_state}
+                      {t("dashboard.surveillance_condition")}: {t(`status.${dashboard.surveillance_state}`) || dashboard.surveillance_state}
                     </span>
                     <p className="text-xs text-slate-300 mt-0.5">
                       {dashboard.surveillance_state === "WARNING"
-                        ? "Production threshold exceedance detected on monitored asset. Operational review required."
+                        ? t("dashboard.surveillance_warning_desc")
                         : dashboard.surveillance_state === "NORMAL"
-                        ? "Wellhead telemetry operating within validated engineering envelope."
-                        : "Telemetry data is currently unavailable. Waiting for sensor stream."}
+                        ? t("dashboard.surveillance_normal_desc")
+                        : t("dashboard.surveillance_unavailable_desc")}
                     </p>
                   </div>
                 </div>
@@ -201,7 +201,7 @@ export function Dashboard() {
             {isLoading && (
               <div className="flex flex-col items-center justify-center p-12 text-slate-400 space-y-3">
                 <RefreshCw className="w-8 h-8 animate-spin text-cyan-400" />
-                <p className="text-sm font-semibold">Streaming surveillance telemetry...</p>
+                <p className="text-sm font-semibold">{t("dashboard.streaming_telemetry")}</p>
               </div>
             )}
 
@@ -209,7 +209,7 @@ export function Dashboard() {
               <div className="p-6 rounded-2xl bg-rose-950/40 border border-rose-800 text-rose-200 flex items-center gap-3">
                 <AlertTriangle className="w-6 h-6 shrink-0" />
                 <div>
-                  <h3 className="font-bold text-sm">Failed to connect to backend surveillance engine</h3>
+                  <h3 className="font-bold text-sm">{t("dashboard.backend_error")}</h3>
                   <p className="text-xs text-rose-300 mt-1">{(error as any)?.message || "Network unreachable"}</p>
                 </div>
               </div>
@@ -220,10 +220,10 @@ export function Dashboard() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                    Real-Time Surveillance Metrics
+                    {t("dashboard.realtime_metrics_title")}
                   </h3>
                   <span className="text-[11px] text-slate-500 font-medium">
-                    Distinguishes Measured vs Calculated vs Derived
+                    {t("dashboard.realtime_metrics_subtitle")}
                   </span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -249,7 +249,7 @@ export function Dashboard() {
                     )}
                   </div>
                   <span className="text-[11px] text-slate-500 font-medium">
-                    Structured Lifecycle (ACTIVE → ACKNOWLEDGED → RESOLVED)
+                    {t("dashboard.active_alerts_subtitle")}
                   </span>
                 </div>
                 <AlertList alerts={dashboard.active_alerts} wellCode={selectedWellCode} />
@@ -270,12 +270,12 @@ export function Dashboard() {
           <div className="flex items-center gap-2">
             <Server className="w-4 h-4 text-slate-500 shrink-0" />
             <div>
-              <span className="font-semibold text-slate-300">Data Integrity Principle: </span>
+              <span className="font-semibold text-slate-300">{t("dashboard.data_integrity_title")}: </span>
               <span>{t("footer.provenance_notice")}</span>
             </div>
           </div>
           <span className="text-[11px] text-cyan-400 font-mono font-semibold">
-            SMART GUARDIAN ENGINE v2.0
+            {t("dashboard.engine_version")}
           </span>
         </div>
       </main>

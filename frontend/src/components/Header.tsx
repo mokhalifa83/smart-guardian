@@ -52,32 +52,32 @@ export function Header({
             onClick={onOpenSupervisoryModal}
             className={`flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border transition ${
               isSupervisoryActive
-                ? "bg-amber-950/80 border-amber-500/60 text-amber-300 hover:bg-amber-900 shadow-sm shadow-amber-500/20 animate-pulse"
-                : "bg-cyan-950/80 border-cyan-500/50 text-cyan-300 hover:bg-cyan-900 shadow-sm shadow-cyan-500/20"
+                ? "bg-amber-950/80 border-amber-500/60 text-amber-300 hover:bg-amber-900 shadow-sm"
+                : "bg-slate-900/90 border-slate-700 text-slate-300 hover:bg-slate-800"
             }`}
-            title="Click to toggle between Read-Only and Supervisory Write Mode"
+            title="Toggle between Read-Only and Supervisory Write Mode"
           >
             {isSupervisoryActive ? (
               <>
                 <ShieldAlert className="w-3.5 h-3.5 text-amber-400" />
-                <span>SUPERVISORY WRITE MODE (FULL FUNCTION)</span>
+                <span>{t("header.supervisory_write_mode")}</span>
               </>
             ) : (
               <>
                 <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-                <span>READ-ONLY SURVEILLANCE BOUNDARY (CLICK TO UNLOCK)</span>
+                <span>{t("header.read_only_boundary")}</span>
               </>
             )}
           </button>
 
           <span className="hidden lg:inline text-slate-400 text-[11px]">
-            • {t("phase_notice") || "Digital Oilfield & Reservoir Intelligence Layer (SPE-PRMS Standard)"}
+            • {t("phase_notice")}
           </span>
         </div>
 
-        <div className="flex items-center gap-2.5 text-slate-300 text-[11px]">
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400/50"></span>
-          <span className="font-mono text-emerald-400">TELEMETRY LIVE</span>
+        <div className="flex items-center gap-2 text-slate-300 text-[11px]">
+          <span className="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span className="font-mono text-emerald-400 font-semibold">{t("header.telemetry_live")}</span>
         </div>
       </div>
 
@@ -85,26 +85,26 @@ export function Header({
       <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
         {/* Brand */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 via-blue-600 to-indigo-700 flex items-center justify-center shadow-lg shadow-cyan-500/25">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-700 flex items-center justify-center shadow-md shadow-cyan-900/40">
             <Shield className="w-5 h-5 text-white" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-black tracking-tight text-white">
+              <h1 className="text-lg font-black tracking-tight text-white">
                 {t("app_name")}
               </h1>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-950/80 text-cyan-300 border border-cyan-800">
+              <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-cyan-300 border border-slate-700">
                 PROD v2.0
               </span>
             </div>
-            <p className="text-xs text-slate-400 font-medium">{t("app_tagline")}</p>
+            <p className="text-[11px] text-slate-400 font-medium">{t("app_tagline")}</p>
           </div>
         </div>
 
         {/* Well Selector & Actions */}
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2">
           {/* Well Select Dropdown */}
-          <div className="flex items-center gap-2 bg-[#0e1728] border border-oilfield-600 hover:border-cyan-500/60 transition rounded-xl px-3 py-1.5 shadow-sm">
+          <div className="flex items-center gap-2 bg-[#0d1627] border border-oilfield-600 hover:border-cyan-500/60 transition rounded-xl px-3 py-1.5 shadow-sm">
             <Activity className="w-4 h-4 text-cyan-400" />
             <label className="text-xs text-slate-400 font-semibold">
               {t("dashboard.well_code")}:
@@ -112,7 +112,7 @@ export function Header({
             <select
               value={selectedWellCode}
               onChange={(e) => setSelectedWellCode(e.target.value)}
-              className="bg-transparent text-sm font-bold text-white focus:outline-none cursor-pointer font-mono"
+              className="bg-transparent text-xs font-bold text-white focus:outline-none cursor-pointer font-mono"
             >
               {wells && wells.length > 0 ? (
                 wells.map((w) => (
@@ -131,17 +131,17 @@ export function Header({
           {/* Manage Wells / Add Well Button */}
           <button
             onClick={onOpenWellManagement}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white shadow-md shadow-cyan-600/20 transition"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white shadow-sm transition"
             title="Manage all wells: Add new, rename, configure thresholds, or delete"
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>Manage Wells ({wells.length})</span>
+            <span>{t("header.manage_wells_btn", { count: wells.length })}</span>
           </button>
 
           {/* Action Modals */}
           <button
             onClick={onOpenManualModal}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#0f1b2f] hover:bg-[#14243e] text-slate-200 border border-oilfield-600 transition"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-xl bg-[#0f1b2f] hover:bg-[#15243f] text-slate-200 border border-oilfield-600 transition"
           >
             <Database className="w-3.5 h-3.5 text-emerald-400" />
             <span>{t("dashboard.ingest_manual")}</span>
@@ -149,7 +149,7 @@ export function Header({
 
           <button
             onClick={onOpenSeparatorModal}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#0f1b2f] hover:bg-[#14243e] text-slate-200 border border-oilfield-600 transition"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-xl bg-[#0f1b2f] hover:bg-[#15243f] text-slate-200 border border-oilfield-600 transition"
           >
             <Activity className="w-3.5 h-3.5 text-cyan-400" />
             <span>{t("dashboard.ingest_separator")}</span>
@@ -157,7 +157,7 @@ export function Header({
 
           <button
             onClick={onOpenConfigModal}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#0f1b2f] hover:bg-[#14243e] text-slate-200 border border-oilfield-600 transition"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-xl bg-[#0f1b2f] hover:bg-[#15243f] text-slate-200 border border-oilfield-600 transition"
           >
             <Sliders className="w-3.5 h-3.5 text-amber-400" />
             <span>{t("dashboard.configure_well")}</span>
@@ -166,11 +166,11 @@ export function Header({
           {/* Language Toggle */}
           <button
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-xl bg-[#0e1728] hover:bg-oilfield-700 text-cyan-300 border border-cyan-800/80 transition shadow-sm"
-            title="Toggle Arabic / English & RTL / LTR"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-xl bg-[#0e1728] hover:bg-oilfield-700 text-cyan-300 border border-cyan-800/80 transition"
+            title="Switch Language"
           >
             <Globe className="w-3.5 h-3.5" />
-            <span>{language === "en" ? "العربية (Cairo)" : "English (Cairo)"}</span>
+            <span>{t("header.lang_toggle")}</span>
           </button>
         </div>
       </div>

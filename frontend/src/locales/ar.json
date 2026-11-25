@@ -10,6 +10,16 @@
     "ingestion": "استقبال البيانات",
     "configuration": "إعدادات البئر"
   },
+  "sidebar": {
+    "surveillance": "المراقبة الحقلية الفورية",
+    "field_overview": "النظرة الشاملة للحقل",
+    "engines_hub": "محركات المكمن الـ 36",
+    "reports": "التقارير الهندسية والتصدير",
+    "field_operations": "العمليات الحقلية",
+    "navigation": "التنقل الرئيسي",
+    "collapse": "طي الشريط",
+    "expand": "توسيع الشريط"
+  },
   "header": {
     "supervisory_write_mode": "وضع التحكم الإشرافي (كامل الصلاحيات)",
     "read_only_boundary": "حاجز المراقبة للقراءة فقط",

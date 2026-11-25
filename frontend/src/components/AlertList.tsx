@@ -6,14 +6,15 @@ import { useLanguage } from "@/context/LanguageContext";
 import { formatDateTime } from "@/lib/utils";
 import { acknowledgeAlert, resolveAlert } from "@/lib/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AlertTriangle, AlertCircle, CheckCircle2, ShieldAlert } from "lucide-react";
+import { AlertTriangle, AlertCircle, CheckCircle2, ShieldAlert, Cpu, ArrowRight } from "lucide-react";
 
 interface AlertListProps {
   alerts: Alert[];
   wellCode?: string;
+  onLaunchDiagnostic?: (wellCode: string) => void;
 }
 
-export function AlertList({ alerts, wellCode }: AlertListProps) {
+export function AlertList({ alerts, wellCode, onLaunchDiagnostic }: AlertListProps) {
   const { t } = useLanguage();
   const queryClient = useQueryClient();
   const [resolvingId, setResolvingId] = useState<string | null>(null);
@@ -99,8 +100,19 @@ export function AlertList({ alerts, wellCode }: AlertListProps) {
               </div>
             </div>
 
-            {/* Lifecycle Buttons */}
+            {/* Lifecycle & Diagnostic Buttons */}
             <div className="flex items-center gap-2 self-end md:self-center shrink-0">
+              {onLaunchDiagnostic && wellCode && (
+                <button
+                  onClick={() => onLaunchDiagnostic(wellCode)}
+                  className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-950/80 hover:bg-indigo-900 text-indigo-300 border border-indigo-600/60 transition flex items-center gap-1.5"
+                  title="Launch 36 Reservoir Engines Diagnostic Hub for this well"
+                >
+                  <Cpu className="w-3.5 h-3.5 text-indigo-400" />
+                  <span>Chan Diagnostic</span>
+                  <ArrowRight className="w-3 h-3 rtl:rotate-180" />
+                </button>
+              )}
               {alert.status === "ACTIVE" && (
                 <button
                   onClick={() => ackMutation.mutate(alert.alert_id)}

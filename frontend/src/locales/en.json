@@ -10,6 +10,16 @@
     "ingestion": "Data Ingestion",
     "configuration": "Well Config"
   },
+  "sidebar": {
+    "surveillance": "Real-Time Surveillance",
+    "field_overview": "Field-Wide Overview",
+    "engines_hub": "36 Reservoir Engines",
+    "reports": "Engineering Reports",
+    "field_operations": "Field Operations",
+    "navigation": "Navigation",
+    "collapse": "Collapse Sidebar",
+    "expand": "Expand Sidebar"
+  },
   "header": {
     "supervisory_write_mode": "SUPERVISORY WRITE MODE (FULL FUNCTION)",
     "read_only_boundary": "READ-ONLY SURVEILLANCE BOUNDARY",

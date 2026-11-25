@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #070c16;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+
+.dark {
+  --background: #0f172a;
   --foreground: #f8fafc;
 }
 
@@ -12,6 +17,7 @@ body {
   background: var(--background);
   font-family: var(--font-cairo), Cairo, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* RTL Specific adjustments */
@@ -28,33 +34,22 @@ body {
 
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #070c16;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #192c4e;
+  background: #cbd5e1;
   border-radius: 4px;
 }
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
 ::-webkit-scrollbar-thumb:hover {
-  background: #243c68;
+  background: #94a3b8;
 }
-
-/* Glassmorphic Petroleum Card Surfaces */
-.glass-panel {
-  background: rgba(11, 19, 34, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(36, 60, 104, 0.4);
-}
-
-.glass-panel-hover {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.glass-panel-hover:hover {
-  border-color: rgba(0, 229, 255, 0.4);
-  box-shadow: 0 10px 30px -10px rgba(0, 229, 255, 0.15);
-  transform: translateY(-2px);
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }

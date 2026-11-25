@@ -13,7 +13,7 @@ import {
   Tag,
   Gauge,
   Droplets,
-  Activity
+  Activity,
 } from "lucide-react";
 
 interface KpiCardProps {
@@ -30,11 +30,11 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
   const getMetricIcon = (metricKey: string) => {
     switch (metricKey) {
       case "water_cut":
-        return <Droplets className="w-5 h-5 text-cyan-400" />;
+        return <Droplets className="w-5 h-5 text-blue-600 dark:text-cyan-400" />;
       case "pressure":
-        return <Gauge className="w-5 h-5 text-amber-400" />;
+        return <Gauge className="w-5 h-5 text-amber-600 dark:text-amber-400" />;
       case "flow_rate":
-        return <Activity className="w-5 h-5 text-emerald-400" />;
+        return <Activity className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />;
       default:
         return <Activity className="w-5 h-5 text-slate-400" />;
     }
@@ -44,14 +44,14 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
     switch (kpi.status) {
       case "NORMAL":
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-700/60">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-700/60">
             <CheckCircle2 className="w-3.5 h-3.5" />
             {t("status.NORMAL")}
           </span>
         );
       case "WARNING":
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-semibold bg-amber-950/90 text-amber-300 border border-amber-500">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300 dark:bg-amber-950/90 dark:text-amber-300 dark:border-amber-500">
             <AlertTriangle className="w-3.5 h-3.5" />
             {t("status.WARNING")}
           </span>
@@ -59,7 +59,7 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
       case "DATA_UNAVAILABLE":
       default:
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-600">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600">
             <HelpCircle className="w-3.5 h-3.5" />
             {t("status.DATA_UNAVAILABLE")}
           </span>
@@ -67,30 +67,29 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
     }
   };
 
-  // Determine card border accent based on state
   const borderClass =
     kpi.status === "WARNING"
-      ? "border-amber-500/80 bg-amber-950/10"
+      ? "border-amber-300 bg-amber-50/50 dark:border-amber-500/80 dark:bg-amber-950/10"
       : kpi.status === "NORMAL"
-      ? "border-oilfield-700 hover:border-oilfield-600"
-      : "border-slate-700/60 bg-slate-900/40";
+      ? "border-slate-200 bg-white dark:border-slate-800 dark:bg-[#1e293b]"
+      : "border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-[#1e293b]/60";
 
   return (
     <div
-      className={`rounded-xl border ${borderClass} bg-oilfield-800/80 p-5 shadow-lg flex flex-col justify-between transition duration-200`}
+      className={`rounded-2xl border ${borderClass} p-5 shadow-sm dark:shadow-lg flex flex-col justify-between transition duration-200`}
     >
       {/* Top Header */}
       <div>
         <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-oilfield-700/60 border border-oilfield-600">
+            <div className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
               {getMetricIcon(kpi.metric_key)}
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-slate-200 tracking-wide">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 tracking-wide">
                 {t(`kpi.${kpi.metric_key}`) || kpi.title}
               </h3>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 {kpi.threshold !== null
                   ? `${t("kpi.threshold")}: ${kpi.threshold}%`
                   : `${t("kpi.value_type")}: ${t(`status.${kpi.value_type}`)}`}
@@ -104,10 +103,10 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
         <div className="my-4">
           {kpi.status === "DATA_UNAVAILABLE" ? (
             <div className="py-2">
-              <span className="text-lg font-mono font-bold tracking-wider text-slate-400 uppercase bg-slate-800/80 px-3 py-1.5 rounded border border-slate-700">
+              <span className="text-lg font-mono font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
                 DATA_UNAVAILABLE
               </span>
-              <p className="text-xs text-slate-400 mt-2">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
                 External telemetry unavailable. No synthetic 0.0 substitution.
               </p>
             </div>
@@ -116,22 +115,22 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
               <div className="flex items-baseline gap-2">
                 <span
                   className={`text-3xl lg:text-4xl font-extrabold font-mono tracking-tight ${
-                    kpi.status === "WARNING" ? "text-amber-400" : "text-white"
+                    kpi.status === "WARNING" ? "text-amber-600 dark:text-amber-400" : "text-slate-900 dark:text-white"
                   }`}
                 >
                   {kpi.display_value}
                 </span>
-                <span className="text-sm font-semibold text-slate-400 font-mono">
+                <span className="text-sm font-semibold text-slate-500 dark:text-slate-400 font-mono">
                   {kpi.unit}
                 </span>
               </div>
               {kpi.is_threshold_exceeded ? (
-                <span className="text-xs font-semibold text-amber-400 border border-amber-500/50 bg-amber-950/60 px-2 py-0.5 rounded">
+                <span className="text-xs font-semibold text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-500/50 bg-amber-100 dark:bg-amber-950/60 px-2 py-0.5 rounded-md">
                   {t("kpi.warning_exceeded")}
                 </span>
               ) : (
-                <div className="flex items-center gap-1.5 text-xs text-emerald-400/90 font-mono bg-emerald-950/30 px-2 py-0.5 rounded-md border border-emerald-800/40">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                <div className="flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400/90 font-mono bg-emerald-50 dark:bg-emerald-950/30 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800/40">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400"></span>
                   <span>Stable</span>
                 </div>
               )}
@@ -141,12 +140,12 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
       </div>
 
       {/* Provenance & Audit Metadata Grid */}
-      <div className="border-t border-oilfield-700/60 pt-3 mt-2 grid grid-cols-2 gap-2 text-xs text-slate-300">
+      <div className="border-t border-slate-100 dark:border-slate-800 pt-3 mt-2 grid grid-cols-2 gap-2 text-xs text-slate-500 dark:text-slate-400">
         <div className="flex items-center gap-1.5 truncate">
           <Database className="w-3.5 h-3.5 text-slate-400 shrink-0" />
           <span className="truncate">
             <span className="text-slate-400">{t("kpi.source")}: </span>
-            <span className="text-slate-200 font-medium font-mono">
+            <span className="text-slate-700 dark:text-slate-200 font-medium font-mono">
               {kpi.source || "--"}
             </span>
           </span>
@@ -159,10 +158,10 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
             <span
               className={`font-medium ${
                 kpi.quality_status === "VALID"
-                  ? "text-emerald-400"
+                  ? "text-emerald-600 dark:text-emerald-400"
                   : kpi.quality_status === "DATA_UNAVAILABLE"
-                  ? "text-slate-400 font-mono"
-                  : "text-amber-400"
+                  ? "text-slate-500 dark:text-slate-400 font-mono"
+                  : "text-amber-600 dark:text-amber-400"
               }`}
             >
               {t(`status.${kpi.quality_status}`) || kpi.quality_status}
@@ -174,7 +173,7 @@ export function KpiCard({ kpi: propKpi, data: propData }: KpiCardProps) {
           <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
           <span className="truncate text-slate-400">
             {t("kpi.measured_at")}:{" "}
-            <span className="text-slate-200 font-mono">
+            <span className="text-slate-700 dark:text-slate-200 font-mono">
               {formatDateTime(kpi.timestamp)}
             </span>
           </span>

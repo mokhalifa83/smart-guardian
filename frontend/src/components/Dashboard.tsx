@@ -64,7 +64,7 @@ export function Dashboard() {
     : isSidebarCollapsed ? "ml-20" : "ml-64";
 
   return (
-    <div className="min-h-screen bg-[#070c16] text-slate-100 flex font-cairo">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-slate-100 flex font-cairo">
       {/* Collapsible Sidebar */}
       <Sidebar
         activeView={activeView}
@@ -95,20 +95,20 @@ export function Dashboard() {
           {activeView === "surveillance" && (
             <div className="space-y-6">
               {/* Well Surveillance Summary Banner with Integrated Condition */}
-              <div className="rounded-2xl border border-oilfield-700/80 bg-[#0c1527] p-5 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1e293b] p-5 shadow-sm dark:shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                 <div>
                   <div className="flex flex-wrap items-center gap-2.5">
-                    <h2 className="text-2xl font-black tracking-tight text-white font-mono">
+                    <h2 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white font-mono">
                       {dashboard?.well_code || selectedWellCode}
                     </h2>
-                    <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-800 text-cyan-300 border border-slate-700">
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-blue-800 dark:text-cyan-300 border border-slate-200 dark:border-slate-700">
                       {selectedWell?.field_name || dashboard?.field_name || "Field Reservoir"}
                     </span>
                     <span
                       className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
                         (selectedWell?.status || dashboard?.well_status) === "ACTIVE"
-                          ? "bg-emerald-950/80 text-emerald-400 border border-emerald-800"
-                          : "bg-amber-950/80 text-amber-400 border border-amber-800"
+                          ? "bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800"
+                          : "bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-400 border border-amber-200 dark:border-amber-800"
                       }`}
                     >
                       {selectedWell?.status || dashboard?.well_status || "ACTIVE"}
@@ -119,10 +119,10 @@ export function Dashboard() {
                       <div
                         className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold border transition ${
                           dashboard.surveillance_state === "WARNING"
-                            ? "bg-amber-950/60 border-amber-500/60 text-amber-300"
+                            ? "bg-amber-100 dark:bg-amber-950/60 border-amber-300 dark:border-amber-500/60 text-amber-900 dark:text-amber-300"
                             : dashboard.surveillance_state === "NORMAL"
-                            ? "bg-emerald-950/60 border-emerald-500/60 text-emerald-300"
-                            : "bg-slate-900 border-slate-700 text-slate-300"
+                            ? "bg-emerald-100 dark:bg-emerald-950/60 border-emerald-300 dark:border-emerald-500/60 text-emerald-900 dark:text-emerald-300"
+                            : "bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300"
                         }`}
                         title={
                           dashboard.surveillance_state === "WARNING"
@@ -133,11 +133,11 @@ export function Dashboard() {
                         }
                       >
                         {dashboard.surveillance_state === "WARNING" ? (
-                          <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                          <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                         ) : dashboard.surveillance_state === "NORMAL" ? (
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                         ) : (
-                          <HelpCircle className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                          <HelpCircle className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 shrink-0" />
                         )}
                         <span>
                           {t("dashboard.surveillance_condition")}: {t(`status.${dashboard.surveillance_state}`) || dashboard.surveillance_state}
@@ -145,23 +145,23 @@ export function Dashboard() {
                       </div>
                     )}
                   </div>
-                  <p className="text-xs text-slate-400 mt-1.5 font-medium">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 font-medium">
                     {t("dashboard.subtitle")}
                   </p>
                 </div>
 
                 {/* Quick Metrics & Actions */}
                 <div className="flex flex-wrap items-center gap-2.5 text-xs">
-                  <div className="bg-[#080e1b] border border-oilfield-700/80 px-3.5 py-2 rounded-xl">
-                    <span className="text-slate-400 block text-[11px] font-semibold">{t("dashboard.configured_threshold")}:</span>
-                    <span className="text-sm font-bold font-mono text-amber-400">
+                  <div className="bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-slate-700 px-3.5 py-2 rounded-xl">
+                    <span className="text-slate-500 dark:text-slate-400 block text-[11px] font-semibold">{t("dashboard.configured_threshold")}:</span>
+                    <span className="text-sm font-bold font-mono text-amber-600 dark:text-amber-400">
                       {dashboard ? `${dashboard.configured_wc_threshold}%` : "80.0%"}
                     </span>
                   </div>
 
-                  <div className="bg-[#080e1b] border border-oilfield-700/80 px-3.5 py-2 rounded-xl">
-                    <span className="text-slate-400 block text-[11px] font-semibold">{t("dashboard.latest_ts")}:</span>
-                    <span className="text-xs font-bold font-mono text-cyan-300">
+                  <div className="bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-slate-700 px-3.5 py-2 rounded-xl">
+                    <span className="text-slate-500 dark:text-slate-400 block text-[11px] font-semibold">{t("dashboard.latest_ts")}:</span>
+                    <span className="text-xs font-bold font-mono text-blue-700 dark:text-cyan-300">
                       {formatDateTime(dashboard?.latest_timestamp)}
                     </span>
                   </div>
@@ -169,10 +169,10 @@ export function Dashboard() {
                   <button
                     onClick={() => refetch()}
                     disabled={isFetching}
-                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-oilfield-700 hover:bg-oilfield-600 text-white border border-oilfield-600 transition shadow-sm"
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-700 hover:bg-blue-600 dark:bg-slate-800 dark:hover:bg-slate-700 text-white dark:text-slate-200 border border-blue-600 dark:border-slate-700 transition shadow-sm"
                     title="Poll API immediately"
                   >
-                    <RefreshCw className={`w-3.5 h-3.5 text-cyan-400 ${isFetching ? "animate-spin" : ""}`} />
+                    <RefreshCw className={`w-3.5 h-3.5 text-blue-200 dark:text-cyan-400 ${isFetching ? "animate-spin" : ""}`} />
                     <span className="font-semibold">{t("dashboard.refresh_now")}</span>
                   </button>
                 </div>
@@ -180,14 +180,14 @@ export function Dashboard() {
 
               {/* Operational Warning Notification Strip (Only shown when WARNING) */}
               {dashboard && dashboard.surveillance_state === "WARNING" && (
-                <div className="rounded-xl border border-amber-500/40 bg-amber-950/30 p-3.5 flex items-center justify-between text-amber-200">
+                <div className="rounded-xl border border-amber-300 dark:border-amber-500/40 bg-amber-50 dark:bg-amber-950/30 p-3.5 flex items-center justify-between text-amber-900 dark:text-amber-200">
                   <div className="flex items-center gap-2.5">
-                    <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
                     <span className="text-xs font-medium">
                       {t("dashboard.surveillance_warning_desc")}
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-900/60 text-amber-300 border border-amber-600/60">
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-200 dark:bg-amber-900/60 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-600/60">
                     {dashboard.surveillance_state}
                   </span>
                 </div>
@@ -280,15 +280,15 @@ export function Dashboard() {
           )}
 
           {/* Architectural Footer Note */}
-          <div className="rounded-xl border border-oilfield-700/60 bg-[#080e1b] p-4 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1e293b] p-4 text-xs text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
             <div className="flex items-center gap-2">
-              <Server className="w-4 h-4 text-slate-500 shrink-0" />
+              <Server className="w-4 h-4 text-slate-400 shrink-0" />
               <div>
-                <span className="font-semibold text-slate-300">{t("dashboard.data_integrity_title")}: </span>
+                <span className="font-semibold text-slate-700 dark:text-slate-300">{t("dashboard.data_integrity_title")}: </span>
                 <span>{t("footer.provenance_notice")}</span>
               </div>
             </div>
-            <span className="text-[11px] text-cyan-400 font-mono font-semibold">
+            <span className="text-[11px] text-blue-700 dark:text-cyan-400 font-mono font-semibold">
               {t("dashboard.engine_version")}
             </span>
           </div>

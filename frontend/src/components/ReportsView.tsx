@@ -60,17 +60,17 @@ export function ReportsView() {
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="rounded-2xl border border-oilfield-700/80 bg-[#0c1527] p-6 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1e293b] p-6 shadow-sm dark:shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="p-2.5 rounded-xl bg-amber-950/60 border border-amber-800/80 text-amber-400">
+            <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800/80 text-amber-700 dark:text-amber-400">
               <FileText className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white">
                 Official Engineering Reports & Data Exports
               </h2>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                 Generate SPE-PRMS compliant production reports and audit datasets
               </p>
             </div>
@@ -81,15 +81,15 @@ export function ReportsView() {
           <button
             onClick={handleExportCsv}
             disabled={isExporting}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-[#0a1120] hover:bg-slate-800 text-cyan-300 border border-cyan-800/80 transition shadow-sm"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 dark:bg-[#0a1120] dark:hover:bg-slate-800 text-blue-700 dark:text-cyan-300 border border-slate-200 dark:border-cyan-800/80 transition shadow-sm"
           >
-            <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
+            <FileSpreadsheet className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Export CSV</span>
           </button>
 
           <button
             onClick={handlePrintPdf}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-cyan-600 hover:bg-cyan-500 text-white shadow-md shadow-cyan-900/30 transition"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-blue-700 hover:bg-blue-600 dark:bg-cyan-600 dark:hover:bg-cyan-500 text-white shadow-sm transition"
           >
             <Printer className="w-4 h-4" />
             <span>Print Official PDF</span>
@@ -98,25 +98,25 @@ export function ReportsView() {
       </div>
 
       {exportSuccess && (
-        <div className="p-3 rounded-xl bg-emerald-950/80 border border-emerald-600 text-emerald-300 text-xs font-semibold flex items-center gap-2 animate-in fade-in duration-200">
+        <div className="p-3 rounded-xl bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 text-xs font-semibold flex items-center gap-2 animate-in fade-in duration-200">
           <CheckCircle2 className="w-4 h-4" />
           <span>{exportSuccess}</span>
         </div>
       )}
 
       {/* Report Preview Document */}
-      <div className="rounded-2xl border border-oilfield-700/80 bg-[#0c1527] p-8 shadow-2xl space-y-6 print:border-none print:p-0 print:bg-white print:text-black">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1e293b] p-8 shadow-sm dark:shadow-2xl space-y-6 print:border-none print:p-0 print:bg-white print:text-black">
         {/* Document Header */}
-        <div className="border-b border-oilfield-700/60 pb-6 flex items-start justify-between">
+        <div className="border-b border-slate-200 dark:border-slate-700/60 pb-6 flex items-start justify-between">
           <div>
-            <div className="text-lg font-black tracking-tight text-white print:text-black">
+            <div className="text-lg font-black tracking-tight text-slate-900 dark:text-white print:text-black">
               SMART GUARDIAN OILFIELD INTELLIGENCE
             </div>
-            <div className="text-xs text-slate-400 font-mono mt-1 print:text-gray-600">
+            <div className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-1 print:text-gray-600">
               REPORT TYPE: DAILY PRODUCTION & SURVEILLANCE AUDIT
             </div>
           </div>
-          <div className="text-end text-xs font-mono text-slate-400 print:text-gray-600">
+          <div className="text-end text-xs font-mono text-slate-500 dark:text-slate-400 print:text-gray-600">
             <div>DATE: {new Date().toLocaleDateString()}</div>
             <div>COMPLIANCE: SPE-PRMS CLASS 1</div>
           </div>
@@ -124,23 +124,23 @@ export function ReportsView() {
 
         {/* Report Summary Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="p-4 rounded-xl bg-[#070c16] border border-oilfield-700/60 print:bg-gray-100 print:border-gray-300">
-            <span className="text-[11px] text-slate-400 block font-semibold">Total Surveyed Assets</span>
-            <span className="text-2xl font-bold font-mono text-white print:text-black mt-1 block">
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#070c16] border border-slate-200 dark:border-slate-700/60 print:bg-gray-100 print:border-gray-300">
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 block font-semibold">Total Surveyed Assets</span>
+            <span className="text-2xl font-bold font-mono text-slate-900 dark:text-white print:text-black mt-1 block">
               {wells.length} Wells
             </span>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#070c16] border border-oilfield-700/60 print:bg-gray-100 print:border-gray-300">
-            <span className="text-[11px] text-slate-400 block font-semibold">Data Provenance Integrity</span>
-            <span className="text-2xl font-bold font-mono text-emerald-400 print:text-black mt-1 block">
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#070c16] border border-slate-200 dark:border-slate-700/60 print:bg-gray-100 print:border-gray-300">
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 block font-semibold">Data Provenance Integrity</span>
+            <span className="text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400 print:text-black mt-1 block">
               100% Validated
             </span>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#070c16] border border-oilfield-700/60 print:bg-gray-100 print:border-gray-300">
-            <span className="text-[11px] text-slate-400 block font-semibold">Security Boundary Status</span>
-            <span className="text-2xl font-bold font-mono text-cyan-300 print:text-black mt-1 block">
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#070c16] border border-slate-200 dark:border-slate-700/60 print:bg-gray-100 print:border-gray-300">
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 block font-semibold">Security Boundary Status</span>
+            <span className="text-2xl font-bold font-mono text-blue-700 dark:text-cyan-300 print:text-black mt-1 block">
               Read-Only Verified
             </span>
           </div>
@@ -148,12 +148,12 @@ export function ReportsView() {
 
         {/* Wells Table Preview */}
         <div>
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 print:text-black">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 print:text-black">
             Asset Telemetry Log
           </h4>
-          <div className="overflow-x-auto rounded-xl border border-oilfield-700/60">
+          <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700/60">
             <table className="w-full text-start text-xs print:text-black">
-              <thead className="bg-[#070c16] text-slate-400 print:bg-gray-200">
+              <thead className="bg-slate-50 dark:bg-[#070c16] text-slate-600 dark:text-slate-400 print:bg-gray-200">
                 <tr>
                   <th className="px-4 py-2.5 text-start font-mono">Well Identifier</th>
                   <th className="px-4 py-2.5 text-start">Field</th>
@@ -163,20 +163,20 @@ export function ReportsView() {
                   <th className="px-4 py-2.5 text-start">Audit Trail</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-oilfield-700/40">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-700/40">
                 {wells.slice(0, 10).map((w, i) => (
-                  <tr key={w.well_code} className="hover:bg-slate-800/30">
-                    <td className="px-4 py-2.5 font-mono font-bold text-cyan-300 print:text-black">
+                  <tr key={w.well_code} className="hover:bg-slate-50 dark:hover:bg-slate-800/30">
+                    <td className="px-4 py-2.5 font-mono font-bold text-blue-700 dark:text-cyan-300 print:text-black">
                       {w.well_code}
                     </td>
-                    <td className="px-4 py-2.5 text-slate-300 print:text-black">{w.field_name}</td>
+                    <td className="px-4 py-2.5 text-slate-700 dark:text-slate-300 print:text-black">{w.field_name}</td>
                     <td className="px-4 py-2.5">
-                      <span className="font-semibold text-emerald-400 print:text-black">{w.status}</span>
+                      <span className="font-semibold text-emerald-600 dark:text-emerald-400 print:text-black">{w.status}</span>
                     </td>
-                    <td className="px-4 py-2.5 font-mono font-bold text-white print:text-black">
+                    <td className="px-4 py-2.5 font-mono font-bold text-slate-900 dark:text-white print:text-black">
                       {(38.0 + (i * 4.5)).toFixed(1)}%
                     </td>
-                    <td className="px-4 py-2.5 font-mono text-slate-300 print:text-black">
+                    <td className="px-4 py-2.5 font-mono text-slate-700 dark:text-slate-300 print:text-black">
                       {980 + i * 15} psi
                     </td>
                     <td className="px-4 py-2.5 text-[11px] font-mono text-slate-400 print:text-black">
@@ -190,12 +190,12 @@ export function ReportsView() {
         </div>
 
         {/* Sign-off footer */}
-        <div className="border-t border-oilfield-700/60 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 print:text-black gap-4">
+        <div className="border-t border-slate-200 dark:border-slate-700/60 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 print:text-black gap-4">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+            <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Cryptographic telemetry signature verified</span>
           </div>
-          <div className="font-mono text-slate-400">
+          <div className="font-mono text-slate-500 dark:text-slate-400">
             Chief Reservoir Engineer Sign-Off: ____________________
           </div>
         </div>

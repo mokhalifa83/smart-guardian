@@ -74,97 +74,97 @@ export function FieldOverview({
       {/* Field Totalizer Summary KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Liquid Rate */}
-        <div className="rounded-2xl border border-oilfield-700/80 bg-[#0c1527] p-5 shadow-lg flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1e293b] p-5 shadow-sm dark:shadow-lg flex items-center justify-between">
           <div>
-            <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider block">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider block">
               Field Gross Liquid
             </span>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-3xl font-extrabold font-mono text-white">
+              <span className="text-3xl font-extrabold font-mono text-slate-900 dark:text-white">
                 {totalLiquid.toLocaleString()}
               </span>
               <span className="text-xs text-slate-400 font-mono font-semibold">bpd</span>
             </div>
-            <span className="text-[11px] text-emerald-400 font-medium mt-1 block">
+            <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium mt-1 block">
               Across {totalActive} Active Wells
             </span>
           </div>
-          <div className="p-3 rounded-xl bg-cyan-950/60 border border-cyan-800/80 text-cyan-400">
+          <div className="p-3 rounded-xl bg-blue-50 dark:bg-cyan-950/60 border border-blue-200 dark:border-cyan-800/80 text-blue-700 dark:text-cyan-400">
             <Activity className="w-6 h-6" />
           </div>
         </div>
 
         {/* Field Average Water Cut */}
-        <div className="rounded-2xl border border-oilfield-700/80 bg-[#0c1527] p-5 shadow-lg flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1e293b] p-5 shadow-sm dark:shadow-lg flex items-center justify-between">
           <div>
-            <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider block">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider block">
               Field Average Water Cut
             </span>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-3xl font-extrabold font-mono text-cyan-300">
+              <span className="text-3xl font-extrabold font-mono text-blue-700 dark:text-cyan-300">
                 {avgWc}%
               </span>
               <span className="text-xs text-slate-400 font-mono font-semibold">WC</span>
             </div>
-            <span className="text-[11px] text-slate-400 font-medium mt-1 block">
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-1 block">
               Weighted Reservoir Average
             </span>
           </div>
-          <div className="p-3 rounded-xl bg-cyan-950/60 border border-cyan-800/80 text-cyan-400">
+          <div className="p-3 rounded-xl bg-blue-50 dark:bg-cyan-950/60 border border-blue-200 dark:border-cyan-800/80 text-blue-700 dark:text-cyan-400">
             <Droplets className="w-6 h-6" />
           </div>
         </div>
 
         {/* Active Producers */}
-        <div className="rounded-2xl border border-oilfield-700/80 bg-[#0c1527] p-5 shadow-lg flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1e293b] p-5 shadow-sm dark:shadow-lg flex items-center justify-between">
           <div>
-            <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider block">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider block">
               Producers Online
             </span>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-3xl font-extrabold font-mono text-emerald-400">
+              <span className="text-3xl font-extrabold font-mono text-emerald-600 dark:text-emerald-400">
                 {totalActive}
               </span>
               <span className="text-xs text-slate-400 font-mono font-semibold">/ {wells.length}</span>
             </div>
-            <span className="text-[11px] text-emerald-400 font-medium mt-1 block">
+            <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium mt-1 block">
               {wells.length - totalActive} Shut-in or Suspended
             </span>
           </div>
-          <div className="p-3 rounded-xl bg-emerald-950/60 border border-emerald-800/80 text-emerald-400">
+          <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/80 text-emerald-700 dark:text-emerald-400">
             <CheckCircle2 className="w-6 h-6" />
           </div>
         </div>
 
         {/* Active Field Warnings */}
-        <div className="rounded-2xl border border-oilfield-700/80 bg-[#0c1527] p-5 shadow-lg flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1e293b] p-5 shadow-sm dark:shadow-lg flex items-center justify-between">
           <div>
-            <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider block">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider block">
               Wells in Warning State
             </span>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className={`text-3xl font-extrabold font-mono ${totalWarnings > 0 ? "text-amber-400" : "text-white"}`}>
+              <span className={`text-3xl font-extrabold font-mono ${totalWarnings > 0 ? "text-amber-600 dark:text-amber-400" : "text-slate-900 dark:text-white"}`}>
                 {totalWarnings}
               </span>
               <span className="text-xs text-slate-400 font-mono font-semibold">Exceedances</span>
             </div>
-            <span className="text-[11px] text-amber-400 font-medium mt-1 block">
+            <span className="text-[11px] text-amber-600 dark:text-amber-400 font-medium mt-1 block">
               {totalWarnings > 0 ? "Engineering Diagnostics Required" : "All Wells Operating in Envelope"}
             </span>
           </div>
-          <div className="p-3 rounded-xl bg-amber-950/60 border border-amber-800/80 text-amber-400">
+          <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800/80 text-amber-700 dark:text-amber-400">
             <AlertTriangle className="w-6 h-6" />
           </div>
         </div>
       </div>
 
       {/* Wells Matrix Table */}
-      <div className="rounded-2xl border border-oilfield-700/80 bg-[#0c1527] shadow-xl overflow-hidden">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1e293b] shadow-sm dark:shadow-xl overflow-hidden">
         {/* Table Filter & Search Controls */}
-        <div className="p-4 bg-[#0a1120] border-b border-oilfield-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-4 bg-slate-50/80 dark:bg-[#0f172a] border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <LayoutDashboard className="w-5 h-5 text-cyan-400" />
-            <h3 className="text-sm font-bold text-white">
+            <LayoutDashboard className="w-5 h-5 text-blue-700 dark:text-cyan-400" />
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white">
               Field Wells Surveillance Matrix ({filteredRows.length})
             </h3>
           </div>
@@ -178,7 +178,7 @@ export function FieldOverview({
                 placeholder="Search well code or field..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-[#070c16] border border-oilfield-600 rounded-xl pl-9 pr-3 rtl:pl-3 rtl:pr-9 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 w-48 sm:w-56"
+                className="bg-white dark:bg-[#070c16] border border-slate-200 dark:border-oilfield-600 rounded-xl pl-9 pr-3 rtl:pl-3 rtl:pr-9 py-1.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 dark:focus:border-cyan-500 w-48 sm:w-56"
               />
             </div>
 
@@ -186,7 +186,7 @@ export function FieldOverview({
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-[#070c16] border border-oilfield-600 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500 cursor-pointer"
+              className="bg-white dark:bg-[#070c16] border border-slate-200 dark:border-oilfield-600 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:border-blue-500 dark:focus:border-cyan-500 cursor-pointer"
             >
               <option value="ALL">All Statuses</option>
               <option value="WARNING">Warnings Only</option>
@@ -199,7 +199,7 @@ export function FieldOverview({
         {/* Table Content */}
         <div className="overflow-x-auto">
           <table className="w-full text-start text-xs">
-            <thead className="bg-[#070c16]/80 border-b border-oilfield-700/60 text-slate-400 uppercase text-[10px] tracking-wider font-semibold">
+            <thead className="bg-slate-50 dark:bg-[#070c16] border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 uppercase text-[10px] tracking-wider font-semibold">
               <tr>
                 <th className="px-5 py-3 text-start">Well Code</th>
                 <th className="px-5 py-3 text-start">Field / Reservoir</th>
@@ -210,50 +210,50 @@ export function FieldOverview({
                 <th className="px-5 py-3 text-end">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-oilfield-700/50">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80">
               {filteredRows.map((row) => (
                 <tr
                   key={row.well_code}
-                  className="hover:bg-slate-800/40 transition group"
+                  className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition group"
                 >
-                  <td className="px-5 py-3.5 font-bold font-mono text-cyan-300">
+                  <td className="px-5 py-3.5 font-bold font-mono text-blue-800 dark:text-cyan-300">
                     {row.well_code}
                   </td>
-                  <td className="px-5 py-3.5 text-slate-300 font-medium">
+                  <td className="px-5 py-3.5 text-slate-700 dark:text-slate-300 font-medium">
                     {row.field_name}
                   </td>
                   <td className="px-5 py-3.5">
                     <span
                       className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                         row.status === "ACTIVE"
-                          ? "bg-emerald-950/80 text-emerald-300 border border-emerald-800"
-                          : "bg-slate-800 text-slate-300 border border-slate-700"
+                          ? "bg-emerald-100 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800"
+                          : "bg-slate-100 text-slate-700 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700"
                       }`}
                     >
                       {row.status}
                     </span>
                   </td>
                   <td className="px-5 py-3.5 font-mono">
-                    <span className={row.water_cut >= row.threshold ? "text-amber-400 font-bold" : "text-white"}>
+                    <span className={row.water_cut >= row.threshold ? "text-amber-600 dark:text-amber-400 font-bold" : "text-slate-900 dark:text-white"}>
                       {row.water_cut}%
                     </span>
-                    <span className="text-[10px] text-slate-500 ml-1">/ {row.threshold}%</span>
+                    <span className="text-[10px] text-slate-400 ml-1">/ {row.threshold}%</span>
                   </td>
-                  <td className="px-5 py-3.5 font-mono text-white font-semibold">
+                  <td className="px-5 py-3.5 font-mono text-slate-900 dark:text-white font-semibold">
                     {row.flow_rate.toLocaleString()} bpd
                   </td>
                   <td className="px-5 py-3.5">
                     <span
                       className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-[11px] font-semibold ${
                         row.surveillance_state === "WARNING"
-                          ? "bg-amber-950/80 text-amber-300 border border-amber-600/60"
-                          : "bg-emerald-950/60 text-emerald-300 border border-emerald-800/60"
+                          ? "bg-amber-100 text-amber-800 border border-amber-300 dark:bg-amber-950/80 dark:text-amber-300 dark:border-amber-600/60"
+                          : "bg-emerald-100 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60"
                       }`}
                     >
                       {row.surveillance_state === "WARNING" ? (
-                        <AlertTriangle className="w-3 h-3 text-amber-400" />
+                        <AlertTriangle className="w-3 h-3 text-amber-600 dark:text-amber-400" />
                       ) : (
-                        <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                        <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                       )}
                       <span>{row.surveillance_state}</span>
                     </span>
@@ -262,7 +262,7 @@ export function FieldOverview({
                     <div className="flex items-center justify-end gap-2">
                       <button
                         onClick={() => onSelectWellToMonitor(row.well_code)}
-                        className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-cyan-600/20 hover:bg-cyan-600/40 text-cyan-300 border border-cyan-500/40 transition"
+                        className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 dark:bg-cyan-600/20 dark:hover:bg-cyan-600/40 dark:text-cyan-300 dark:border-cyan-500/40 transition"
                         title="Focus Surveillance Dashboard on this well"
                       >
                         Monitor
@@ -270,7 +270,7 @@ export function FieldOverview({
                       {row.surveillance_state === "WARNING" && (
                         <button
                           onClick={() => onLaunchDiagnostics(row.well_code)}
-                          className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-amber-600/20 hover:bg-amber-600/40 text-amber-300 border border-amber-500/40 transition flex items-center gap-1"
+                          className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 dark:bg-amber-600/20 dark:hover:bg-amber-600/40 dark:text-amber-300 dark:border-amber-500/40 transition flex items-center gap-1"
                           title="Launch Chan Diagnostic Plot for this well"
                         >
                           <span>Diagnose</span>

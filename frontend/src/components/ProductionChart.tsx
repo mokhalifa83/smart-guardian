@@ -86,34 +86,34 @@ export function ProductionChart({ wellCode, threshold = 75.0 }: ProductionChartP
   const thresholdY = paddingY + chartH - ((threshold - minWc) / (maxWc - minWc)) * chartH;
 
   return (
-    <div className="rounded-2xl border border-oilfield-700/80 bg-[#0c1527] p-5 shadow-xl space-y-4">
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1e293b] p-5 shadow-sm dark:shadow-xl space-y-4">
       {/* Chart Header & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-oilfield-700/60">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-700/60">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-cyan-950/60 border border-cyan-800/80 text-cyan-400">
+          <div className="p-2 rounded-xl bg-blue-50 dark:bg-cyan-950/60 border border-blue-200 dark:border-cyan-800/80 text-blue-700 dark:text-cyan-400">
             <TrendingUp className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <span>Production & Telemetry Trend Curve</span>
-              <span className="font-mono text-cyan-300 font-bold text-xs">({wellCode})</span>
+              <span className="font-mono text-blue-700 dark:text-cyan-300 font-bold text-xs">({wellCode})</span>
             </h3>
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
               Multi-parameter surveillance trend (Water Cut % vs Separator Pressure vs Gross Rate)
             </p>
           </div>
         </div>
 
         {/* Time Range Selector */}
-        <div className="flex items-center gap-1.5 bg-[#070c16] border border-oilfield-600 rounded-xl p-1 self-start sm:self-auto">
+        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-[#070c16] border border-slate-200 dark:border-oilfield-600 rounded-xl p-1 self-start sm:self-auto">
           {(["24h", "7d", "30d"] as const).map((r) => (
             <button
               key={r}
               onClick={() => setTimeRange(r)}
               className={`px-2.5 py-1 text-xs font-bold rounded-lg transition ${
                 timeRange === r
-                  ? "bg-cyan-600 text-white shadow-sm"
-                  : "text-slate-400 hover:text-white"
+                  ? "bg-blue-700 dark:bg-cyan-600 text-white shadow-sm"
+                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               {r.toUpperCase()}
@@ -123,7 +123,7 @@ export function ProductionChart({ wellCode, threshold = 75.0 }: ProductionChartP
       </div>
 
       {/* SVG Multi-Layer Chart */}
-      <div className="relative overflow-hidden rounded-xl bg-[#070c16] border border-oilfield-700/40 p-2">
+      <div className="relative overflow-hidden rounded-xl bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 p-2">
         <svg
           viewBox={`0 0 ${svgWidth} ${svgHeight}`}
           className="w-full h-56 select-none"
